@@ -5,6 +5,7 @@ import os
 import PIL 
 import io
 
+
 GOOGLE_API_KEY= st.secrets['GOOGLE_API_KEY']
 
 genai.configure(api_key=GOOGLE_API_KEY)
