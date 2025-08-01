@@ -78,7 +78,7 @@ for message in st.session_state.messages:
 
 
 if add_radio == 'Text ✏':
-    model = genai.GenerativeModel(model_name="gemini-pro",
+    model = genai.GenerativeModel(model_name="models/gemini-2.5-pro",
                                 generation_config=generation_config,
                                 safety_settings=safety_settings)
     prompt = st.chat_input("Ask anything")
@@ -102,7 +102,7 @@ if add_radio == 'Text ✏':
 
 elif add_radio == 'Document 📄':
     st.warning("Please upload a planning document ", icon="🤖")
-    model = genai.GenerativeModel('gemini-pro',
+    model = genai.GenerativeModel('models/gemini-2.5-pro',
                                 generation_config=generation_config,
                                 safety_settings=safety_settings)
 
