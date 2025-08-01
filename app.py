@@ -8,6 +8,7 @@ import pdfplumber
 import docx
 import pandas as pd
 
+
 GOOGLE_API_KEY= st.secrets['GOOGLE_API_KEY']
 
 genai.configure(api_key=GOOGLE_API_KEY)
