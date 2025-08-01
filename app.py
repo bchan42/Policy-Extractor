@@ -129,63 +129,71 @@ elif add_radio == 'Document 📄':
             st.error("Unsupported file type.")
             st.stop()
 
-        # figure out chunking
-        if len(doc) > 10000:
-            st.warning("Document is too long — only the first 10,000 characters will be analyzed.")
-            doc_text = doc_text[:10000]
 
-        full_prompt = f"""You're a city planning policy expert. The user uploaded a planning document.
+        # chunk by paragraph
+        paragraphs = [p.strip() for p in doc_text.split("\n\n") if p.strip()]
+        all_policies = []
 
-                        Extract and list all city planning **policies** mentioned in this document in the following format:
+        with st.spinner(f"Analyzing {len(paragraphs)} paragraphs..."):
+            for i, para in enumerate(paragraphs):
+                prompt = f"""You're a city planning policy expert.
 
-                        Policy Number, Policy Description
+                                Extract **any planning policies** mentioned in this paragraph in the following format:
 
-                        Make sure each policy is concise and clearly separated by a new line. Example:
-                        1, Require 25% affordable housing in new developments
-                        2, Limit building height to 5 stories in residential zones
+                                Policy Number, Policy Description
 
-                        # change after fixed chunking by paragraph?
+                                Make sure each policy is concise and clearly separated by a new line. Example:
+                                1, Require 25% affordable housing in new developments
+                                2, Limit building height to 5 stories in residential zones
 
-                        Document:
-                        \"\"\"
-                        {doc_text}
-                        \"\"\"
-                        """
+                                If there are no policies, respond with: NONE
+
+                                Paragraph:
+                                \"\"\"
+                                {para}
+                                \"\"\"
+                                """
+                
+                response = model.generate_content(prompt)
+                output = response.text.strip()
+
+                if output.upper() != "NONE":
+                    all_policies.extend([
+                        line.strip() for line in output.splitlines() if line.strip()
+                    ])
         
-        with st.spinner("Analyzing document and extracting policies..."):
-            response = model.generate_content(full_prompt)
+        if all_policies:
 
-        st.success("✅ Policies extracted:")
+            st.success(f"✅ Extracted {len(all_policies)} policies!")
 
-        st.subheader("📋 Raw Output")
-        st.code(response.text, language="markdown")
+            st.subheader("📋 Policies (Raw)")
+            st.code("\n".join(all_policies), language="markdown")
 
-        st.markdown(response.text)
 
-        # csv / excel download buttons 
-        try:
-            df = pd.read_csv(io.StringIO(response.text), names=["Policy Number", "Policy Text"])
-            st.subheader("📊 Structured Table")
-            st.dataframe(df)
+            # csv / excel download buttons 
+            try:
+                df = pd.read_csv(io.StringIO("\n".join(all_policies)), names=["Policy Number", "Policy Text"])
+                st.subheader("📊 Structured Table")
+                st.dataframe(df)
 
-            # CSV download
-            csv_buffer = io.StringIO()
-            df.to_csv(csv_buffer, index=False)
-            st.download_button("⬇ Download as CSV", csv_buffer.getvalue(),
-                            file_name="extracted_policies.csv", mime="text/csv")
+                # CSV download
+                csv_buffer = io.StringIO()
+                df.to_csv(csv_buffer, index=False)
+                st.download_button("⬇ Download as CSV", csv_buffer.getvalue(),
+                                file_name="extracted_policies.csv", mime="text/csv")
 
-            # Excel download
-            excel_buffer = io.BytesIO()
-            with pd.ExcelWriter(excel_buffer, engine='xlsxwriter') as writer:
-                df.to_excel(writer, index=False, sheet_name="Policies")
-            st.download_button("⬇ Download as Excel", excel_buffer.getvalue(),
-                            file_name="extracted_policies.xlsx",
-                            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                # Excel download
+                excel_buffer = io.BytesIO()
+                with pd.ExcelWriter(excel_buffer, engine='xlsxwriter') as writer:
+                    df.to_excel(writer, index=False, sheet_name="Policies")
+                st.download_button("⬇ Download as Excel", excel_buffer.getvalue(),
+                                file_name="extracted_policies.xlsx",
+                                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
 
-        except Exception as e:
-            st.error("⚠ Could not parse Gemini output. Showing text only.")
-            st.download_button("⬇ Download as Text", response.text,
-                                file_name="extracted_policies.txt", mime="text/plain")
+            except Exception as e:
+                st.error("⚠ Could not parse Gemini output. Showing text only.")
+                st.download_button("⬇ Download as Text", "\n".join(all_policies),
+                                    file_name="extracted_policies.txt", mime="text/plain")
  
               
 
