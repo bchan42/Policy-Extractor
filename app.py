@@ -42,9 +42,9 @@ safety_settings = [
 
 st.set_page_config(page_title="Gemini-ChatBot", layout = 'wide')
 
-st.title('Gemini-ChatBot')
+st.title('Wildfire Policy Extractor')
 st.markdown("""
-Welcome to Gemini-ChatBot! This interactive chatbot is powered by Google's generative AI.
+Welcome to our wildfire policy extractor tool! This interactive chatbot is powered by Google's generative AI.
 Feel free to ask anything and enjoy the conversation!
 """)
 
