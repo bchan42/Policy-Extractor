@@ -1,53 +1,55 @@
-# Chat-Gemini
+# Policy Extraction Web App
 
-![1_uUFFjzaVmE_1RrfcVbx2QQ](https://github.com/hrishi-008/Chat-Gemini/assets/97169623/3b30526a-ca1a-4355-bef3-864f07671f54)
+[**Live App →**](https://chat-gemini-pro.streamlit.app/)
 
+Policy Extractor is a tool built with Google's Gemini Pro, designed to help city planners and researchers automatically extract policies from municipal planning documents (e.g., CAPs, general plans). Gemini is a large language model that can be used for a variety of tasks, including text generation, translation, and question answering.
 
-[Chat-Gemini](https://chat-gemini-pro.streamlit.app/) _**(click to view live project)**_ is a chatbot made using Google's Gemini. Gemini is a large language model that can be used for a variety of tasks, including text generation, translation, and question answering.
+The tool processes PDFs, DOCX, or TXT files, page-by-page, using the Gemini API to identify key planning policies, particularly those related to zoning, evacuation, and fire resilience. Users can also filter or prompt the model for specific topics.
 
-## Clone the repository:
-
-```bash
-git clone https://github.com/hrishi-008/Chat-Gemini.git
-cd Chat-Gemini
-```
+---
 
 ## Getting Started
 
-To get started, you will need to create a Google Cloud Platform account and enable the Gemini API. You can do this by following the instructions [here](https://makersuite.google.com/app/apikey).
+To get started, you just need to click on this web app [Policy-Extractor](https://chat-gemini-pro.streamlit.app/).
 
-Once you have enabled the API, you can install the requirements:
 
-```shell
-pip install -r requirements.txt
+In the case that the API Key needs to be renewed, follow the steps below:
+
+1. Clone the Repository
+
+```bash
+git clone https://github.com/bchan42/Policy-Extractor.git
+cd Policy-Extractor
 ```
+
+2. Set Up Google Gemini Key
+* Create a Google Cloud project and enable the Generative Language API
+* Generate an API key by following [these instructions](https://makersuite.google.com/app/apikey).
+
+3. Add your API Key into the code
+* Create a `.streamlit/secrets.toml` file and add your key:
+```bash
+GOOGLE_API_KEY = "YOUR-API-KEY-HERE"
+```
+
 ## Features
 
-Chat-Gemini has a number of features that make it a powerful chatbot. These features include:
+**Policy-Extractor** has a number of features that make it a powerful policy extractor tool. These features include:
 
-* **Large language model:** Gemini is a large language model that has been trained on a massive dataset of text and code. This allows it to understand and respond to a wide variety of queries.
-* **Generative text:** Chat-Gemini can generate text that is both informative and engaging. This makes it ideal for use in chatbots, dialogue systems, and other applications where natural language generation is required. It has a memory too.
-* **Translation:** Chat-Gemini can translate text between over 100 languages. This makes it ideal for use in multilingual applications.
-* **Question answering:** Chat-Gemini can answer questions on a wide range of topics. This makes it ideal for use in help desks, customer service applications, and other applications where question answering is required.
-* **Image Input enabled:** Input an image and get desired results
-
-## Applications
-
-Chat-Gemini can be used in a variety of applications, including:
-
-* **Chatbots:** Chat-Gemini can be used to create chatbots that can answer customer questions, provide support, or simply provide companionship.
-* **Dialogue systems:** Chat-Gemini can be used to create dialogue systems that can engage in natural conversations with users.
-* **Customer service:** Chat-Gemini can be used to help customer service agents resolve customer issues.
-* **Help desks:** Chat-Gemini can be used to help users find answers to their questions.
-* **Education:** Chat-Gemini can be used to help students learn new concepts.
-* **Entertainment:** Chat-Gemini can be used to create games, stories, and other forms of entertainment.
+* 🔥 Wildfire policy extraction from planning documents
+* PDF, DOCX, and TXT support
+* Topic filtering via optional prompt input
+* Gemini Pro API integration for high-quality output
+* Clean, minimal Streamlit web interface
 
 ## Documentation
 
-For more information on Chat-Gemini, please see the following resources:
+For more information on **Policy-Extractor**, please see the following resources:
 
 * [Gemini documentation](https://deepmind.google/technologies/gemini/#introduction)
 
 ## License
 
 Chat-Gemini is licensed under the Apache License, Version 2.0. See the [LICENSE](LICENSE) file for more information.
+
+This project was adapted in part from hrishi-008/Chat-Gemini, which provided a helpful starting template for building Gemini-powered apps in Streamlit.
