@@ -84,7 +84,17 @@ if not "valid_inputs_received" in st.session_state:
 # Sidebar
 
 with st.sidebar:
-    st.title("🔍 Extract Policies")
+    # st.title("🔍 Extract Policies")
+
+    st.markdown(
+            "## How to use\n"
+            "1. Upload a city planning document (pdf, docx, or txt file📄)\n"
+            "2. Analyze the extract policies & download if you would like\n"
+
+            "3. Ask a question about the document💬\n"
+        )
+    
+    st.markdown("---")
     # st.markdown("Upload a document and enter any custom instruction if needed.")
     # user_note = st.text_area("Optional note to the model (adds to prompt)", placeholder="e.g., Focus on building code requirements")
 
