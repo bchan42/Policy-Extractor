@@ -85,7 +85,7 @@ if not "valid_inputs_received" in st.session_state:
 with st.sidebar:
     # st.title("🔍 Extract Policies")
 
-    st.markdoown(
+    st.markdown(
         "## 📘 How to Use"
     )
 
