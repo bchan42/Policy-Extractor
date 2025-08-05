@@ -98,11 +98,14 @@ def query_gemini(text):
 
     model = genai.GenerativeModel(model_name="gemini-2.5-flash-lite")
     prompt = (
-    "You're a city planning policy expert.\n"
-    "From the following text chunk, extract only the **policy statements** that typically follow a number or look like formal numbered policies."
-    "Do not include explanations, summaries, or additional text. Only return the policy text itself.\n\n"
-    f"{text}"
-)
+    f"""You’re a city planning policy expert. 
+    Extract policies related to wildfire resilience and/or mitigation from this text. 
+    A policy can be a rule, guideline, goal, or program. 
+    Make sure each policy is concise and clearly separated by a new line. 
+    If the policy is preceded by a number or label, please include the label in the extracted policy. 
+    Do not include explanations, summaries, or additional text. If there are no policies, respond with: NONE. 
+    \n{text}"""
+    )
 
     try:
         response = model.generate_content(prompt)
