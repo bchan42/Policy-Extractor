@@ -1,9 +1,11 @@
 import streamlit as st
 import google.generativeai as genai
 import google.ai.generativelanguage as glm
+import fitz
+import re
+import time
 
 from backend.extract import process_document, save_to_excel
-
 
 ##################################################################
 # Set up Gemini API
@@ -97,7 +99,7 @@ StartTab, AboutTab = st.tabs(["Quick Start", "About"])
 
 ##################################################################
 
-# About Tab - Information about the project, help guide for API usage (that could be a separate tab altogether later)
+# About Tab - Information about the project, help guide for API usage (API usage limits could be a separate tab altogether)
 # For now it's just info about streamlit :)
 with AboutTab:
 
@@ -120,6 +122,7 @@ with AboutTab:
         "You can quickly deploy Streamlit apps using [Streamlit Community Cloud](https://streamlit.io/cloud) in just a few clicks."
     )
 
+##################################################################
 # Start Tab - Upload doc and get policies from our basic prompt 
 with StartTab:
     st.markdown("""
@@ -132,7 +135,7 @@ with StartTab:
     """)
 
     st.warning("Please upload a planning document ", icon="🤖")
-    model = genai.GenerativeModel('models/gemini-2.5-pro',
+    model = genai.GenerativeModel(model_name="gemini-2.0-flash",
                                 generation_config=generation_config,
                                 safety_settings=safety_settings)
 
