@@ -86,12 +86,12 @@ safety_settings = [
 ##################################################################
 # Set up page layout and title
 
-st.title('Policy Extractor Tool')
-st.markdown("""
-Welcome to our wildfire policy extractor tool! Please click the “Drag and Drop” button to upload a planning document. 
-            The document will be scanned using our custom prompt to extract all wildfire-related policies. 
-            A CSV file with the extracted policies will be returned.
-""")
+# st.title('Policy Extractor Tool')
+# st.markdown("""
+# Welcome to our wildfire policy extractor tool! Please click the “Drag and Drop” button to upload a planning document. 
+#             The document will be scanned using our custom prompt to extract all wildfire-related policies. 
+#             A CSV file with the extracted policies will be returned.
+# """)
 # `st.set_page_config` is used to display the default layout width, the title of the app, and the emoticon in the browser tab.
 st.set_page_config(page_title="PolicyExtractor", layout = 'centered', page_icon="")
 
