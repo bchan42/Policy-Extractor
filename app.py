@@ -148,7 +148,7 @@ with StartTab:
 if doc:
     df = process_document(doc)
 
-    st.success("Extraction complete! Compare chunk inputs with extracted policies:")
+    st.success("Extraction complete! Compare paragraph inputs with extracted policies:")
 
     # Helpful instructions before showing DataFrame
     st.markdown(

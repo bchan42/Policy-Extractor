@@ -128,10 +128,10 @@ def process_document(doc):
     estimated_time_min = estimated_time_sec / 60
 
     if total_chunks > 1500:
-        st.warning("Too many chunks for daily limit (1500/day). Consider splitting the document.")
+        st.warning("Too many chunks for daily limit (1500/day). Consider splitting the document into fewer paragraphs.")
         return {}
 
-    st.info(f"Detected {total_chunks} chunks. Estimated processing time: ~{estimated_time_min:.1f} minutes.")
+    st.info(f"Reading {total_chunks} paragraphs. Estimated processing time: ~{estimated_time_min:.1f} minutes.")
 
     # extracted_policies = {}
 
@@ -145,16 +145,31 @@ def process_document(doc):
 
     results = []
 
+    progress_bar = st.progress(0)
+    progress_text = st.empty()
+
     for i, para_text in enumerate(text_chunks):
-        st.write(f"Processing chunk {i+1}/{total_chunks}...")
+        progress_text.write(f"Processing paragraph {i + 1}/{total_chunks}...")
         policy = query_gemini(para_text)
         results.append({
-            "Chunk #": i + 1,
-            "Chunk Text": para_text.strip(),
+            "Paragraph #": i + 1,
+            "Paragraph Text": para_text.strip(),
             "Extracted Policy": policy.strip()
         })
+        progress_bar.progress((i + 1) / total_chunks)
         if i < total_chunks - 1:
             time.sleep(delay_per_chunk)
+
+    # for i, para_text in enumerate(text_chunks):
+    #     st.write(f"Processing paragraph {i+1}/{total_chunks}...")
+    #     policy = query_gemini(para_text)
+    #     results.append({
+    #         "Paragraph #": i + 1,
+    #         "Paragraph Text": para_text.strip(),
+    #         "Extracted Policy": policy.strip()
+    #     })
+    #     if i < total_chunks - 1:
+    #         time.sleep(delay_per_chunk)
 
     return pd.DataFrame(results)
 
