@@ -91,15 +91,10 @@ with st.sidebar:
 
     st.markdown(
         """
-            1. **Upload** a city planning document (pdf, docx, or txt file 📄)
-            2. **Analyze** extracted policies below
-            3. **Download** the results as an Excel file
-
-            ---
-
-            **Additional Features**
-            - Ask a **question** about the document 💬
-            - **Filter** specific keywords or topics
+            1. **Upload** a city planning document (PDF, DOCX, or TXT)
+            2. View automatically extracted policies
+            3. (Optional) *Ask* questions or *filter* for keywords or topics
+            4. **Download** the results as Excel or CSV
         """
         )
     
@@ -126,8 +121,8 @@ st.markdown(
     """
     <style>
         [data-testid="stSidebar"] {
-            min-width: 300px;
-            width: 300px;
+            min-width: 280px;
+            width: 280px;
         }
     </style>
     """,
@@ -170,16 +165,17 @@ with AboutTab:
 ##################################################################
 # Start Tab - Upload doc and get policies from our basic prompt 
 with StartTab:
-    st.markdown("""
-        Welcome to our policy extraction tool for wildfire mitigation! 
+    st.markdown("""                
+        
+        Welcome to our policy extraction tool! 
                 
-        This tool sends a document to Google's Gemini AI, which reads it and returns policies related to wildfire safety.
+        This tool sends a document to Google's Gemini AI, which reads it and returns policies found in the document.
                 
         To use our custom prompt, start here and upload your planning document.
                 
     """)
 
-    st.warning("Please upload a planning document ", icon="🤖")
+    st.warning("Please click the “Drag and Drop” button to upload a planning document.", icon="🤖")
     model = genai.GenerativeModel(model_name="gemini-2.0-flash",
                                 generation_config=generation_config,
                                 safety_settings=safety_settings)
