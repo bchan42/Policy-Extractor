@@ -120,32 +120,11 @@ def process_document(doc):
     return pd.DataFrame(results)
 
 
-# print out formatted extracted_policies in app?? or just
-# allow download to CSV / XML?
-
 
 # 5. Convert to DataFrame
 
 # input: dictionary of policies
 # ouput: excel file
-# def save_to_excel(extracted_policies: dict) -> bytes:
-#     df = pd.DataFrame(list(extracted_policies.items()), columns=["Chunk", "Extracted Policy"])
-    
-#     output = io.BytesIO()
-#     with pd.ExcelWriter(output, engine="xlsxwriter") as writer:
-
-#         df.to_excel(writer, index=False, sheet_name="ExtractedPolicies") # in-memory Excel file
-
-#         # Auto-adjust columns width
-#         worksheet = writer.sheets["ExtractedPolicies"]
-#         for idx, col in enumerate(df.columns):
-#             # Get max length of data in the column
-#             max_len = max(df[col].astype(str).map(len).max(), len(col)) + 2
-#             worksheet.set_column(idx, idx, max_len)
-
-#     return output.getvalue()
-
-
 def save_to_excel(data):
     df = pd.DataFrame(data)  # your list of dicts
 
