@@ -144,32 +144,32 @@ with StartTab:
 
 ##################################################################
 
-# CODE FOR EXTRACTING POLICIES
-if doc:
-    df = process_document(doc)
+    # CODE FOR EXTRACTING POLICIES
+    if doc:
+        df = process_document(doc)
 
-    st.success("Extraction complete! Compare paragraph inputs with extracted policies:")
+        st.success("Extraction complete! Compare paragraph inputs with extracted policies:")
 
-    # Helpful instructions before showing DataFrame
-    st.markdown(
-        """
-        ℹ️ **Tips for viewing the table below**:
-        - Hover over the table to see icons at top-right of the table. 
-            - Click the **full-screen** icon to expand the view.
-                - **Double-click** on any cell to view full text if it's cut off.
-            - Click the **magnifying glass 🔍** icon to search for specific words.
-            - Click the **download** icon to download the data as a CSV file. 
-        """
-    )
+        # Helpful instructions before showing DataFrame
+        st.markdown(
+            """
+            ℹ️ **Tips for viewing the table below**:
+            - Hover over the table to see icons at top-right of the table. 
+                - Click the **full-screen** icon to expand the view.
+                    - **Double-click** on any cell to view full text if it's cut off.
+                - Click the **magnifying glass 🔍** icon to search for specific words.
+                - Click the **download** icon to download the data as a CSV file. 
+            """
+        )
 
-    # Display DataFrame directly (scrollable, clean layout)
-    st.dataframe(df, use_container_width=True)
+        # Display DataFrame directly (scrollable, clean layout)
+        st.dataframe(df, use_container_width=True)
 
-    # Allow download as Excel
-    excel_file = save_to_excel(df)
-    st.download_button(
-        label="Download Extracted Policies (.xlsx)",
-        data=excel_file,
-        file_name="extracted_policies.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
+        # Allow download as Excel
+        excel_file = save_to_excel(df)
+        st.download_button(
+            label="Download Extracted Policies (.xlsx)",
+            data=excel_file,
+            file_name="extracted_policies.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
