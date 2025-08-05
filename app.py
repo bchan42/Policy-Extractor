@@ -86,15 +86,44 @@ if not "valid_inputs_received" in st.session_state:
 with st.sidebar:
     # st.title("🔍 Extract Policies")
 
-    st.markdown(
-            "## How to use\n"
-            "1. Upload a city planning document (pdf, docx, or txt file📄)\n"
-            "2. Analyze the extract policies & download if you would like\n"
+    st.markdoown(
+        "## 📘 How to Use"
+    )
 
-            "3. Ask a question about the document💬\n"
+    st.markdown(
+        """
+            1. **Upload** a city planning document (pdf, docx, or txt file 📄)
+            2. **Analyze** extracted policies below
+            3. **Download** the results as an Excel file
+
+            ---
+
+            **Additional Features**
+            - Ask a **question** about the document💬
+            - **Filter** specific keywords or topics"
+        """
         )
     
     st.markdown("---")
+    st.markdown("# About")
+
+    st.markdown(
+        """
+            **Policy Extractor** is a tool built with **Google's Gemini 2.0 Flash-Lite**, designed to help city planners and researchers automatically extract policies from municipal planning documents (e.g., CAPs, general plans).
+            
+            Gemini is a large language model that can be used for a variety of tasks, including text generation, translation, and question answering.
+        """
+        )
+    
+    st.markdown(
+        """
+        The tool processes PDFs, DOCX, or TXT files, page-by-page, using the Gemini API to identify key planning policies, particularly those related to zoning, evacuation, and fire resilience.
+        Users can also filter or prompt the model for specific topics.
+        """
+    )
+
+
+
     # st.markdown("Upload a document and enter any custom instruction if needed.")
     # user_note = st.text_area("Optional note to the model (adds to prompt)", placeholder="e.g., Focus on building code requirements")
 
