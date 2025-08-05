@@ -8,7 +8,7 @@ import docx
 import streamlit as st
 import google.generativeai as genai
 import io
-
+import fitz
 
 
 # 1. Configure Gemini API
@@ -16,8 +16,44 @@ GOOGLE_API_KEY = st.secrets['GOOGLE_API_KEY']
 genai.configure(api_key=GOOGLE_API_KEY)
      
 
-
 # 2. Extract text from uploaded document (pdf / docx / txt)
+
+# Helper function to extract text from pdf using fitz:
+# Increase gap_threshold for larger paragraph chunks
+def extract_paragraphs_from_pdf(file_obj, gap_threshold=20):
+
+    doc = fitz.open(stream=file_obj, filetype="pdf")
+    paragraphs = []
+
+    for page in doc:
+        blocks = page.get_text("blocks")
+        blocks = sorted(blocks, key=lambda b: (b[1], b[0]))  # sort by y, then x
+
+        paragraph = ""
+        last_bottom = None
+
+        for b in blocks:
+            text = b[4].strip()
+            top = b[1]
+
+            if not text:
+                continue
+
+            if last_bottom is not None and top - last_bottom > gap_threshold:
+                if paragraph:
+                    paragraphs.append(paragraph.strip())
+                    paragraph = text
+                else:
+                    paragraph = text
+            else:
+                paragraph += " " + text if paragraph else text
+
+            last_bottom = b[3]
+
+        if paragraph:
+            paragraphs.append(paragraph.strip())
+
+    return paragraphs
 
 # input: doc path
 # output: list of paragraphs depending on format
@@ -26,12 +62,17 @@ def extract_text(doc: str) -> List[str]:
     para_chunks = []
 
     if doc.name.endswith(".pdf"):
-        with pdfplumber.open(doc) as pdf:
-            for i, page in enumerate(pdf.pages):
-                text = page.extract_text()
-                if text:
-                    paragraphs = [p.strip() for p in text.split('\n\n') if p.strip()]
-                    para_chunks.extend(paragraphs)
+        # with pdfplumber.open(doc) as pdf:
+        #     for i, page in enumerate(pdf.pages):
+        #         text = page.extract_text()
+        #         if text:
+        #             paragraphs = [p.strip() for p in text.split('\n\n') if p.strip()]
+        #             para_chunks.extend(paragraphs)
+        # Try fitz
+        pdf_bytes = doc.read()
+        pdf_obj = io.BytesIO(pdf_bytes)
+        para_chunks = extract_paragraphs_from_pdf(pdf_obj)
+
 
     elif doc.name.endswith(".docx"):
         doc_obj = docx.Document(doc)
@@ -49,7 +90,6 @@ def extract_text(doc: str) -> List[str]:
     return para_chunks
      
 
-
 # 3. Query Gemini with a text chunk
 
 # input: a paragraph
@@ -64,7 +104,6 @@ def query_gemini(text):
     f"{text}"
 )
 
-    
     try:
         response = model.generate_content(prompt)
         return response.text.strip() if response else "No response"
