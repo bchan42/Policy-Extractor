@@ -7,6 +7,10 @@ import io
 import pdfplumber
 import docx
 import pandas as pd
+import fitz
+import re
+from extraction_utils import extract_paragraphs_from_pdf
+import time
 
 ##################################################################
 # Set up Gemini API
@@ -144,7 +148,7 @@ StartTab, AboutTab = st.tabs(["Quick Start", "About"])
 
 ##################################################################
 
-# About Tab - Information about the project, help guide for API usage (that could be a separate tab altogether later)
+# About Tab - Information about the project, help guide for API usage (API usage limits could be a separate tab altogether)
 # For now it's just info about streamlit :)
 with AboutTab:
 
@@ -167,6 +171,7 @@ with AboutTab:
         "You can quickly deploy Streamlit apps using [Streamlit Community Cloud](https://streamlit.io/cloud) in just a few clicks."
     )
 
+##################################################################
 # Start Tab - Upload doc and get policies from our basic prompt 
 with StartTab:
     st.markdown("""
@@ -179,7 +184,7 @@ with StartTab:
     """)
     # if add_radio == 'Document 📄':
     st.warning("Please upload a planning document ", icon="🤖")
-    model = genai.GenerativeModel('models/gemini-2.5-pro',
+    model = genai.GenerativeModel(model_name="gemini-2.0-flash",
                                 generation_config=generation_config,
                                 safety_settings=safety_settings)
 
@@ -187,20 +192,26 @@ with StartTab:
     # prompt = st.chat_input("Ask a question or extract policies")
     extract_button = st.button("🧠 Extract Policies")
 
-
     if doc and extract_button:
 
         # extract text from given file type (pdf / docx / txt)
         if doc.name.endswith(".pdf"):
-            with pdfplumber.open(doc) as pdf:
-                doc_text = "\n".join(page.extract_text() or "" for page in pdf.pages)
+            # Try fitz
+            pdf_bytes = doc.read()
+            pdf_obj = io.BytesIO(pdf_bytes)
+            paragraphs = extract_paragraphs_from_pdf(pdf_obj)
+            # PDF plumber has issues, commented out for now
+            # with pdfplumber.open(doc) as pdf:
+            #     doc_text = "\n".join(page.extract_text() or "" for page in pdf.pages)
 
         elif doc.name.endswith(".docx"):
             docum = docx.Document(doc)
             doc_text = "\n".join([para.text for para in docum.paragraphs])
+            paragraphs = [p.strip() for p in doc_text.split("\n\n") if p.strip()]
         
         elif doc.name.endswith(".txt"):
             doc_text = doc.read().decode()
+            paragraphs = [p.strip() for p in doc_text.split("\n\n") if p.strip()]
 
         else:
             st.error("Unsupported file type.")
@@ -209,37 +220,10 @@ with StartTab:
 
         # # chunk by paragraph
         # paragraphs = [p.strip() for p in doc_text.split("\n\n") if p.strip()]
+        # paragraphs = chunk_paragraphs(doc_text)
+
+        # Extract paragraphs from pdf 
         all_policies = []
-
-        # Function that chunks by paragraph for pdfplumber output
-        def chunk_paragraphs(text):
-            lines = text.split("\n")
-            paragraph = ""
-            paragraphs = []
-
-            for line in lines:
-                stripped = line.strip()
-
-                # Empty line means paragraph break
-                if not stripped:
-                    if paragraph:
-                        paragraphs.append(paragraph.strip())
-                        paragraph = ""
-                else:
-                    # Heuristic: if previous line didn't end with a punctuation, add space
-                    if paragraph and not paragraph.endswith(('.', ':', ';', '?', '!', '-', '”', '’')):
-                        paragraph += " " + stripped
-                    else:
-                        paragraph += " " + stripped if paragraph else stripped
-
-            # Add the last paragraph
-            if paragraph:
-                paragraphs.append(paragraph.strip())
-
-            return paragraphs
-        
-        paragraphs = chunk_paragraphs(doc_text)
-
         with st.spinner(f"Analyzing {len(paragraphs)} paragraphs..."):
             for i, para in enumerate(paragraphs):
                 # prompt = f"""You're a city planning policy expert.
@@ -268,14 +252,19 @@ with StartTab:
                              why you extracted a policy.
 
                              Paragraph: \n\n{para}"""
-                
-                response = model.generate_content(prompt)
-                output = "".join(part.text for part in response.parts if hasattr(part, "text")).strip()
+                try:
+                    response = model.generate_content(prompt)
+                    output = "".join(part.text for part in response.parts if hasattr(part, "text")).strip()
+                    if output.upper() != "NONE":
+                        all_policies.extend([
+                            line.strip() for line in output.splitlines() if line.strip()
+                        ])
+                    if i < len(paragraphs) - 1:
+                        time.sleep(5)
 
-                if output.upper() != "NONE":
-                    all_policies.extend([
-                        line.strip() for line in output.splitlines() if line.strip()
-                    ])
+                except Exception as e:
+                    st.error(f"Gemini API Error: {type(e).__name__}: {str(e)}")
+                    st.stop()
         
         if all_policies:
 
