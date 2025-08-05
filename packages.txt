@@ -1,5 +1,12 @@
+build-essential
 libgl1-mesa-glx
 libglib2.0-0
-ffmpeg
-poppler-utils
-tesseract-ocr
+libsm6
+libxext6
+libxrender1
+libfontconfig1
+libjpeg-dev
+libfreetype6-dev
+liblcms2-dev
+libffi-dev
+libssl-dev
