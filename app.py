@@ -98,8 +98,8 @@ with st.sidebar:
             ---
 
             **Additional Features**
-            - Ask a **question** about the document💬
-            - **Filter** specific keywords or topics"
+            - Ask a **question** about the document 💬
+            - **Filter** specific keywords or topics
         """
         )
     
@@ -121,11 +121,18 @@ with st.sidebar:
         """
     )
 
-
-
-    # st.markdown("Upload a document and enter any custom instruction if needed.")
-    # user_note = st.text_area("Optional note to the model (adds to prompt)", placeholder="e.g., Focus on building code requirements")
-
+# Increase sidebar width using custom CSS
+st.markdown(
+    """
+    <style>
+        [data-testid="stSidebar"] {
+            min-width: 300px;
+            width: 300px;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 
 ##################################################################
