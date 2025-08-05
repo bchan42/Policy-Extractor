@@ -8,7 +8,7 @@ import docx
 import streamlit as st
 import google.generativeai as genai
 import io
-import fitz
+import pymupdf
 
 
 # 1. Configure Gemini API
@@ -22,7 +22,7 @@ genai.configure(api_key=GOOGLE_API_KEY)
 # Increase gap_threshold for larger paragraph chunks
 def extract_paragraphs_from_pdf(file_obj, gap_threshold=20):
 
-    doc = fitz.open(stream=file_obj, filetype="pdf")
+    doc = pymupdf.open(stream=file_obj, filetype="pdf")
     paragraphs = []
 
     for page in doc:
