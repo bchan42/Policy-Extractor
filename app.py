@@ -139,9 +139,13 @@ with st.sidebar:
 
 # TABBED INTERFACE
 
-# Create tabs for Quick Start, Structured, Unstructured, and About sections
+# Create tabs for Quick Start, About sections
 StartTab, AboutTab = st.tabs(["Quick Start", "About"])
 
+##################################################################
+
+# About Tab - Information about the project, help guide for API usage (that could be a separate tab altogether later)
+# For now it's just info about streamlit :)
 with AboutTab:
 
     st.subheader("What is Streamlit?")
@@ -163,9 +167,16 @@ with AboutTab:
         "You can quickly deploy Streamlit apps using [Streamlit Community Cloud](https://streamlit.io/cloud) in just a few clicks."
     )
 
-
+# Start Tab - Upload doc and get policies from our basic prompt 
 with StartTab:
-
+    st.markdown("""
+        Welcome to our policy extraction tool for wildfire mitigation! 
+                
+        This tool sends a document to Google's Gemini AI, which reads it and returns policies related to wildfire safety.
+                
+        To use our custom prompt, start here and upload your planning document.
+                
+    """)
     # if add_radio == 'Document 📄':
     st.warning("Please upload a planning document ", icon="🤖")
     model = genai.GenerativeModel('models/gemini-2.5-pro',
@@ -196,32 +207,70 @@ with StartTab:
             st.stop()
 
 
-        # chunk by paragraph
-        paragraphs = [p.strip() for p in doc_text.split("\n\n") if p.strip()]
+        # # chunk by paragraph
+        # paragraphs = [p.strip() for p in doc_text.split("\n\n") if p.strip()]
         all_policies = []
+
+        # Function that chunks by paragraph for pdfplumber output
+        def chunk_paragraphs(text):
+            lines = text.split("\n")
+            paragraph = ""
+            paragraphs = []
+
+            for line in lines:
+                stripped = line.strip()
+
+                # Empty line means paragraph break
+                if not stripped:
+                    if paragraph:
+                        paragraphs.append(paragraph.strip())
+                        paragraph = ""
+                else:
+                    # Heuristic: if previous line didn't end with a punctuation, add space
+                    if paragraph and not paragraph.endswith(('.', ':', ';', '?', '!', '-', '”', '’')):
+                        paragraph += " " + stripped
+                    else:
+                        paragraph += " " + stripped if paragraph else stripped
+
+            # Add the last paragraph
+            if paragraph:
+                paragraphs.append(paragraph.strip())
+
+            return paragraphs
+        
+        paragraphs = chunk_paragraphs(doc_text)
 
         with st.spinner(f"Analyzing {len(paragraphs)} paragraphs..."):
             for i, para in enumerate(paragraphs):
-                prompt = f"""You're a city planning policy expert.
+                # prompt = f"""You're a city planning policy expert.
 
-                                Extract **any planning policies** mentioned in this paragraph in the following format:
+                #                 Extract **any planning policies** mentioned in this paragraph in the following format:
 
-                                Policy Number, Policy Description
+                #                 Policy Number, Policy Description
 
-                                Make sure each policy is concise and clearly separated by a new line. Example:
-                                1, Require 25% affordable housing in new developments
-                                2, Limit building height to 5 stories in residential zones
+                #                 Make sure each policy is concise and clearly separated by a new line. Example:
+                #                 1, Require 25% affordable housing in new developments
+                #                 2, Limit building height to 5 stories in residential zones
 
-                                If there are no policies, respond with: NONE
+                #                 If there are no policies, respond with: NONE
 
-                                Paragraph:
-                                \"\"\"
-                                {para}
-                                \"\"\"
-                                """
+                #                 Paragraph:
+                #                 \"\"\"
+                #                 {para}
+                #                 \"\"\"
+                #                 """
+                prompt = f"""You are a city planning policy expert.
+                             Extract both explicit and implicit policies related to wildfire resilience and/or mitigation mentioned in the paragraph. 
+                             A policy can be a rule, guideline, or a recommended action. 
+                             Make sure each policy is concise and clearly separated by a new line.
+                             If no policies were found, respond with: NONE. 
+                             When returning policies, provide the exact wording of the policies and do not add any extra text explaining 
+                             why you extracted a policy.
+
+                             Paragraph: \n\n{para}"""
                 
                 response = model.generate_content(prompt)
-                output = response.text.strip()
+                output = "".join(part.text for part in response.parts if hasattr(part, "text")).strip()
 
                 if output.upper() != "NONE":
                     all_policies.extend([
@@ -260,6 +309,9 @@ with StartTab:
                 st.error("⚠ Could not parse Gemini output. Showing text only.")
                 st.download_button("⬇ Download as Text", "\n".join(all_policies),
                                     file_name="extracted_policies.txt", mime="text/plain")
+        
+        else:
+            st.markdown("No policies found. Please try writing a new prompt in the sidebar and rerun.")
 
             
 
