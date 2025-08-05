@@ -1,12 +1,6 @@
 import streamlit as st
 import google.generativeai as genai
 import google.ai.generativelanguage as glm
-import os
-import PIL 
-import io
-import pdfplumber
-import docx
-import pandas as pd
 
 from backend.extract import process_document, save_to_excel
 
@@ -197,11 +191,6 @@ with st.sidebar:
 #     # })
 
 
-#     # add filtered policy topics later??
-
-
-
-doc = st.file_uploader("Upload a planning document", type=["pdf", "docx", "txt"])
 ##################################################################
 
 # TABBED INTERFACE
@@ -253,8 +242,9 @@ with StartTab:
 
     doc = st.file_uploader("Upload a planning document", type=["pdf", "docx", "txt"])
     # prompt = st.chat_input("Ask a question or extract policies")
-    extract_button = st.button("🧠 Extract Policies")
 
+
+# CODE FOR EXTRACTING POLICIES
 if doc:
     df = process_document(doc)
 
