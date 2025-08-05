@@ -96,7 +96,7 @@ def extract_text(doc: str) -> List[str]:
 # output: generated Gemini response
 def query_gemini(text):
 
-    model = genai.GenerativeModel(model_name="gemini-2.0-flash")
+    model = genai.GenerativeModel(model_name="gemini-2.5-flash-lite")
     prompt = (
     "You're a city planning policy expert.\n"
     "From the following text chunk, extract only the **policy statements** that typically follow a number or look like formal numbered policies."
