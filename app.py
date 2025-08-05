@@ -106,7 +106,7 @@ c1, c2 = st.columns([0.30, 1.9],gap="small")
 
 with c1:
 
-    st.image("images/logo.gif",use_column_width=True)
+    st.image("images/logo.gif")
 
 
 # The heading will be on the right.
