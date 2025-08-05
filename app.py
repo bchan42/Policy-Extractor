@@ -50,10 +50,14 @@ from backend.extract import process_document, save_to_excel
 # """, unsafe_allow_html=True)
 
 
+##################################################################
+# Set up Gemini API
 
 GOOGLE_API_KEY= st.secrets['GOOGLE_API_KEY']
 
 genai.configure(api_key=GOOGLE_API_KEY)
+
+##################################################################
 
 # model config
 generation_config = {
@@ -82,7 +86,8 @@ safety_settings = [
 },
 ]
 
-st.set_page_config(page_title="PolicyExtractor", layout = 'wide')
+##################################################################
+# Set up page layout and title
 
 st.title('Policy Extractor Tool')
 st.markdown("""
@@ -90,6 +95,35 @@ Welcome to our wildfire policy extractor tool! Please click the “Drag and Drop
             The document will be scanned using our custom prompt to extract all wildfire-related policies. 
             A CSV file with the extracted policies will be returned.
 """)
+# `st.set_page_config` is used to display the default layout width, the title of the app, and the emoticon in the browser tab.
+st.set_page_config(page_title="PolicyExtractor", layout = 'centered', page_icon="")
+
+# Logo and heading
+
+c1, c2 = st.columns([0.30, 1.9],gap="small")
+
+# The snowflake logo will be displayed in the first column, on the left.
+
+with c1:
+
+    st.image("images/logo.gif",use_column_width=True)
+
+
+# The heading will be on the right.
+
+with c2:
+
+    #st.caption("")
+    st.title("Policy Extractor Tool")
+
+
+# Set up session state via st.session_state so that app interactions don't reset the app.
+
+if not "valid_inputs_received" in st.session_state:
+    st.session_state["valid_inputs_received"] = False
+
+
+##################################################################
 
 # Sidebar
 with st.sidebar:
@@ -164,6 +198,57 @@ with st.sidebar:
 
 
 doc = st.file_uploader("Upload a planning document", type=["pdf", "docx", "txt"])
+##################################################################
+
+# TABBED INTERFACE
+
+# Create tabs for Quick Start, About sections
+StartTab, AboutTab = st.tabs(["Quick Start", "About"])
+
+##################################################################
+
+# About Tab - Information about the project, help guide for API usage (that could be a separate tab altogether later)
+# For now it's just info about streamlit :)
+with AboutTab:
+
+    st.subheader("What is Streamlit?")
+    st.markdown(
+        "[Streamlit](https://streamlit.io) is a Python library that allows the creation of interactive, data-driven web applications in Python."
+    )
+
+    st.subheader("Resources")
+    st.markdown(
+        """
+    - [Streamlit Documentation](https://docs.streamlit.io/)
+    - [Cheat sheet](https://docs.streamlit.io/library/cheatsheet)
+    - [Book](https://www.amazon.com/dp/180056550X) (Getting Started with Streamlit for Data Science)
+    """
+    )
+
+    st.subheader("Deploy")
+    st.markdown(
+        "You can quickly deploy Streamlit apps using [Streamlit Community Cloud](https://streamlit.io/cloud) in just a few clicks."
+    )
+
+# Start Tab - Upload doc and get policies from our basic prompt 
+with StartTab:
+    st.markdown("""
+        Welcome to our policy extraction tool for wildfire mitigation! 
+                
+        This tool sends a document to Google's Gemini AI, which reads it and returns policies related to wildfire safety.
+                
+        To use our custom prompt, start here and upload your planning document.
+                
+    """)
+    # if add_radio == 'Document 📄':
+    st.warning("Please upload a planning document ", icon="🤖")
+    model = genai.GenerativeModel('models/gemini-2.5-pro',
+                                generation_config=generation_config,
+                                safety_settings=safety_settings)
+
+    doc = st.file_uploader("Upload a planning document", type=["pdf", "docx", "txt"])
+    # prompt = st.chat_input("Ask a question or extract policies")
+    extract_button = st.button("🧠 Extract Policies")
 
 if doc:
     df = process_document(doc)
