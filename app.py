@@ -178,6 +178,18 @@ with AboutTab:
     """
     )
 
+
+    st.markdown("<div style='height: 100px;'></div>", unsafe_allow_html=True)
+
+    # Footer
+    st.markdown("""
+    <hr style='margin-top: 2rem; margin-bottom: 1rem;' />
+    <div style='text-align: center;'>
+        © 2025 <strong> Policy Extractor</strong> 
+        <br>Created by Bernette Chan and Nidhi Shinde
+    </div>
+    """, unsafe_allow_html=True)
+
     # st.subheader("Deploy")
     # st.markdown(
     #     "You can quickly deploy Streamlit apps using [Streamlit Community Cloud](https://streamlit.io/cloud) in just a few clicks."
