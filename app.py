@@ -111,25 +111,6 @@ with st.sidebar:
     """
                 )
 
-    
-    st.markdown("---")
-    st.markdown("# About")
-
-    st.markdown(
-        """
-            **Policy Extractor** is a tool built with **Google's Gemini 2.0 Flash-Lite**, designed to help city planners and researchers automatically extract policies from municipal planning documents (e.g., CAPs, general plans).
-            
-            Gemini is a large language model that can be used for a variety of tasks, including text generation, translation, and question answering.
-        """
-        )
-    
-    st.markdown(
-        """
-        The tool processes PDFs, DOCX, or TXT files, page-by-page, using the Gemini API to identify key planning policies, particularly those related to zoning, evacuation, and fire resilience.
-        Users can also filter or prompt the model for specific topics.
-        """
-    )
-
 # Increase sidebar width using custom CSS
 st.markdown(
     """
@@ -149,7 +130,7 @@ st.markdown(
 # TABBED INTERFACE
 
 # Create tabs for Quick Start, About sections
-StartTab, AboutTab = st.tabs(["Quick Start", "About"])
+StartTab, FilteringTab, AboutTab = st.tabs(["Quick Start", "Filtering", "About"])
 
 ##################################################################
 
@@ -178,10 +159,12 @@ with AboutTab:
     """
     )
 
-    # st.subheader("Deploy")
-    # st.markdown(
-    #     "You can quickly deploy Streamlit apps using [Streamlit Community Cloud](https://streamlit.io/cloud) in just a few clicks."
-    # )
+    st.markdown(
+        """
+        ---
+        © 2025 Wildfire Policy Extractor • Created by Bernette Chan and Nidhi Shinde
+    """
+    )
 
 ##################################################################
 # Start Tab - Upload doc and get policies from our basic prompt 
@@ -203,10 +186,7 @@ with StartTab:
 
     doc = st.file_uploader("Choose a file (PDF, DOCX, or TXT)", type=["pdf", "docx", "txt"])
 
-
-##################################################################
-
-    # CODE FOR EXTRACTING POLICIES
+# CODE FOR EXTRACTING POLICIES
     if doc:
         df = process_document(doc)
 
@@ -236,15 +216,35 @@ with StartTab:
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
 
+##################################################################
+# Filtering Tab
+with FilteringTab:
 
+    st.subheader("Filter Extracted Policies by Keyword")
 
-st.markdown("<div style='height: 100px;'></div>", unsafe_allow_html=True)
+    if 'df' in locals() or 'df' in globals():
+        keywords_input = st.text_input(
+            "Enter keyword(s) separated by commas (e.g., wildfire, evacuation, defensible space):"
+        )
 
-# Footer
-st.markdown("""
-<hr style='margin-top: 2rem; margin-bottom: 1rem;' />
-<div style='text-align: center;'>
-    © 2025 <strong> Policy Extractor</strong> 
-    <br>Created by Bernette Chan and Nidhi Shinde
-</div>
-""", unsafe_allow_html=True)
+        if st.button("Apply Filter") and keywords_input:
+            keyword_list = [kw.strip() for kw in keywords_input.split(',') if kw.strip()]
+            if keyword_list:
+                filtered_df = df[df.apply(
+                    lambda row: row.astype(str).str.contains('|'.join(keyword_list), case=False).any(), axis=1
+                )]
+
+                st.success(f"Found {len(filtered_df)} matching chunks.")
+                st.dataframe(filtered_df, use_container_width=True)
+
+                filtered_file = save_to_excel(filtered_df)
+                st.download_button(
+                    label="Download Filtered Policies (.xlsx)",
+                    data=filtered_file,
+                    file_name="filtered_policies.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                )
+            else:
+                st.warning("Please enter at least one valid keyword.")
+    else:
+        st.warning("Please upload and process a document in the Quick Start tab first.")
