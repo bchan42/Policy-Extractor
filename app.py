@@ -83,7 +83,6 @@ if not "valid_inputs_received" in st.session_state:
 # Sidebar
 
 with st.sidebar:
-    # st.title("🔍 Extract Policies")
 
     st.markdown(
         "## 📘 How to Use"
@@ -97,6 +96,21 @@ with st.sidebar:
             4. **Download** the results as Excel or CSV
         """
         )
+    
+    st.markdown("---")
+    
+    st.markdown("## What It Does")
+    st.markdown(
+        """
+            This tool extracts **all policies** from a planning document using Gemini AI.
+
+            You can:
+            - See every extracted policy
+            - 🔥 **Focus on wildfire-related content** (in progress)
+            - 💬 Ask custom questions (in progress)
+    """
+                )
+
     
     st.markdown("---")
     st.markdown("# About")
@@ -143,24 +157,31 @@ StartTab, AboutTab = st.tabs(["Quick Start", "About"])
 # For now it's just info about streamlit :)
 with AboutTab:
 
-    st.subheader("What is Streamlit?")
+    st.subheader("What is Policy-Extractor?")
     st.markdown(
-        "[Streamlit](https://streamlit.io) is a Python library that allows the creation of interactive, data-driven web applications in Python."
+        "[Policy Extractor](https://policy-extractor.streamlit.app/) is a web app powered by Google's Gemini AI that automatically extracts policy statements from city planning documents."
+    )
+
+    st.markdown(
+        """
+        The tool processes PDFs, DOCX, or TXT files, paragraphage-by-paragraph to identify key planning policies, particularly those related to zoning, evacuation, and fire resilience.
+        Users can also filter or prompt the model for specific topics.
+        """
     )
 
     st.subheader("Resources")
     st.markdown(
         """
+    - [Gemini API Documentation](https://ai.google.dev/gemini-api/docs)
     - [Streamlit Documentation](https://docs.streamlit.io/)
-    - [Cheat sheet](https://docs.streamlit.io/library/cheatsheet)
-    - [Book](https://www.amazon.com/dp/180056550X) (Getting Started with Streamlit for Data Science)
+    - [Github Repository](https://github.com/bchan42/Policy-Extractor)
     """
     )
 
-    st.subheader("Deploy")
-    st.markdown(
-        "You can quickly deploy Streamlit apps using [Streamlit Community Cloud](https://streamlit.io/cloud) in just a few clicks."
-    )
+    # st.subheader("Deploy")
+    # st.markdown(
+    #     "You can quickly deploy Streamlit apps using [Streamlit Community Cloud](https://streamlit.io/cloud) in just a few clicks."
+    # )
 
 ##################################################################
 # Start Tab - Upload doc and get policies from our basic prompt 
