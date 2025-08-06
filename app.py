@@ -5,6 +5,7 @@ import re
 import time
 
 from backend.extract import process_document, save_to_excel
+from backend.filter import tag_policy_element
 
 ##################################################################
 # Set up Gemini API
@@ -221,32 +222,75 @@ with StartTab:
 # Filtering Tab
     with FilteringTab:
 
-        st.subheader("Filter Extracted Policies by Keyword")
+        st.subheader("Filter Extracted Policies")
 
         if "df" in st.session_state:
             df = st.session_state["df"]
-            keywords_input = st.text_input(
-                "Enter keyword(s) separated by commas (e.g., wildfire, evacuation, defensible space):"
+            df['Element'] = df['Extracted Policy'].apply(tag_policy_element)
+            df = df.explode('Element').reset_index(drop=True)
+
+            filter_mode = st.radio(
+                "Choose filter method:",
+                options=["By Element Category", "By Keywords"],
+                horizontal=True
             )
 
-            if st.button("Apply Filter") and keywords_input:
-                keyword_list = [kw.strip() for kw in keywords_input.split(',') if kw.strip()]
-                if keyword_list:
-                    filtered_df = df[df.apply(
-                        lambda row: row.astype(str).str.contains('|'.join(keyword_list), case=False).any(), axis=1
-                    )]
+            # filtered_df = df.copy()
 
-                    st.success(f"Found {len(filtered_df)} matching chunks.")
-                    st.dataframe(filtered_df, use_container_width=True)
+            if filter_mode == "By Element Category":
+                st.markdown("**Filter by Element**")
+                unique_elements = df["Element"].dropna().unique()
+                selected_elements = st.multiselect("Select Element(s):", options=unique_elements)
 
-                    filtered_file = save_to_excel(filtered_df)
-                    st.download_button(
-                        label="Download Filtered Policies (.xlsx)",
-                        data=filtered_file,
-                        file_name="filtered_policies.xlsx",
-                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                    )
-                else:
-                    st.warning("Please enter at least one valid keyword.")
+                if st.button("Apply Element Filter"):
+                    if selected_elements:
+                        filtered_df = df[df["Element"].isin(selected_elements)]
+
+                        if not filtered_df.empty:
+                            st.success(f"Found {len(filtered_df)} policies.")
+                            st.dataframe(filtered_df, use_container_width=True)
+
+                        else:
+                            st.warning("No policies matched the selected element(s).")
+                    else:
+                        st.warning("Please select at least one element.")
+
+            
+            elif filter_mode == "By Keywords":
+
+                keywords_input = st.text_input(
+                    "Enter keyword(s) separated by commas (e.g., wildfire, evacuation, defensible space):"
+                )
+
+                if st.button("Apply Filter") and keywords_input:
+                    keyword_list = [kw.strip() for kw in keywords_input.split(',') if kw.strip()]
+                    if keyword_list:
+                        filtered_df = df[df.apply(
+                            lambda row: row.astype(str).str.contains('|'.join(keyword_list), case=False).any(), axis=1
+                        )]
+
+                        st.success(f"Found {len(filtered_df)} matching chunks.")
+                        st.dataframe(filtered_df, use_container_width=True)
+
+                        # filtered_file = save_to_excel(filtered_df)
+                        # st.download_button(
+                        #     label="Download Filtered Policies (.xlsx)",
+                        #     data=filtered_file,
+                        #     file_name="filtered_policies.xlsx",
+                        #     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                        # )
+                    else:
+                        st.warning("Please enter at least one valid keyword.")
+
+            if not filtered_df.empty:
+                filtered_file = save_to_excel(filtered_df)
+                st.download_button(
+                    label="Download Filtered Policies (.xlsx)",
+                    data=filtered_file,
+                    file_name="filtered_policies.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                )
+
+
         else:
             st.warning("Please upload and process a document in the Quick Start tab first.")
