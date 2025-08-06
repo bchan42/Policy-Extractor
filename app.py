@@ -189,7 +189,6 @@ with StartTab:
 # CODE FOR EXTRACTING POLICIES
     if doc:
         df = process_document(doc)
-        st.session_state.df = df
 
         st.success("Extraction complete! Compare paragraph inputs with extracted policies:")
 
@@ -219,34 +218,33 @@ with StartTab:
 
 ##################################################################
 # Filtering Tab
-with FilteringTab:
+    with FilteringTab:
 
-    st.subheader("Filter Extracted Policies by Keyword")
+        st.subheader("Filter Extracted Policies by Keyword")
 
-    if 'df' in st.session_state:
-        df = st.session_state.df
-        keywords_input = st.text_input(
-            "Enter keyword(s) separated by commas (e.g., wildfire, evacuation, defensible space):"
-        )
+        if 'df' in locals() or 'df' in globals():
+            keywords_input = st.text_input(
+                "Enter keyword(s) separated by commas (e.g., wildfire, evacuation, defensible space):"
+            )
 
-        if st.button("Apply Filter") and keywords_input:
-            keyword_list = [kw.strip() for kw in keywords_input.split(',') if kw.strip()]
-            if keyword_list:
-                filtered_df = df[df.apply(
-                    lambda row: row.astype(str).str.contains('|'.join(keyword_list), case=False).any(), axis=1
-                )]
+            if st.button("Apply Filter") and keywords_input:
+                keyword_list = [kw.strip() for kw in keywords_input.split(',') if kw.strip()]
+                if keyword_list:
+                    filtered_df = df[df.apply(
+                        lambda row: row.astype(str).str.contains('|'.join(keyword_list), case=False).any(), axis=1
+                    )]
 
-                st.success(f"Found {len(filtered_df)} matching chunks.")
-                st.dataframe(filtered_df, use_container_width=True)
+                    st.success(f"Found {len(filtered_df)} matching chunks.")
+                    st.dataframe(filtered_df, use_container_width=True)
 
-                filtered_file = save_to_excel(filtered_df)
-                st.download_button(
-                    label="Download Filtered Policies (.xlsx)",
-                    data=filtered_file,
-                    file_name="filtered_policies.xlsx",
-                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                )
-            else:
-                st.warning("Please enter at least one valid keyword.")
-    else:
-        st.warning("Please upload and process a document in the Quick Start tab first.")
+                    filtered_file = save_to_excel(filtered_df)
+                    st.download_button(
+                        label="Download Filtered Policies (.xlsx)",
+                        data=filtered_file,
+                        file_name="filtered_policies.xlsx",
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    )
+                else:
+                    st.warning("Please enter at least one valid keyword.")
+        else:
+            st.warning("Please upload and process a document in the Quick Start tab first.")
