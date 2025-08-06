@@ -1,4 +1,6 @@
 
+import streamlit as st
+
 # database of keywords for each element
 ELEMENT_KEYWORDS = {
     "Land Use": ["rural", "land use", "distance", "zoning", "slope", "development", "agriculture", "urban", "reserve", "line", "boundary", "buffer", "ordinance", "gateway", "road", "building"],
@@ -12,7 +14,7 @@ ELEMENT_KEYWORDS = {
     "Agriculture": ["agriculture", "farming", "crops", "farm"]
 }
 
-
+@st.cache_data
 def tag_policy_element(text):
     text_lower = text.lower()
     tags = []

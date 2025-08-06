@@ -120,6 +120,7 @@ def query_gemini(text):
 
 # input: doc path
 # output: dictionary of extracted policies
+@st.cache_data(show_spinner="Extracting policies from document...")
 def process_document(doc):
 
     text_chunks = extract_text(doc)
@@ -130,8 +131,8 @@ def process_document(doc):
     estimated_time_sec = total_chunks * delay_per_chunk
     estimated_time_min = estimated_time_sec / 60
 
-    if total_chunks > 1500:
-        st.warning("Too many chunks for daily limit (1500/day). Consider splitting the document into fewer paragraphs.")
+    if total_chunks > 1000:
+        st.warning("Too many chunks for daily limit (1000/day). Consider splitting the document.")
         return {}
 
     st.info(f"Reading {total_chunks} paragraphs. Estimated processing time: ~{estimated_time_min:.1f} minutes.")
