@@ -189,6 +189,7 @@ with StartTab:
 # CODE FOR EXTRACTING POLICIES
     if doc:
         df = process_document(doc)
+        st.session_state.df = df
 
         st.success("Extraction complete! Compare paragraph inputs with extracted policies:")
 
@@ -222,7 +223,8 @@ with FilteringTab:
 
     st.subheader("Filter Extracted Policies by Keyword")
 
-    if 'df' in locals() or 'df' in globals():
+    if 'df' in st.session_state:
+        df = st.session_state.df
         keywords_input = st.text_input(
             "Enter keyword(s) separated by commas (e.g., wildfire, evacuation, defensible space):"
         )
