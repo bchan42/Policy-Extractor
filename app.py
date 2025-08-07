@@ -282,14 +282,14 @@ with StartTab:
                     else:
                         st.warning("Please enter at least one valid keyword.")
 
-            if not filtered_df.empty:
-                filtered_file = save_to_excel(filtered_df)
-                st.download_button(
-                    label="Download Filtered Policies (.xlsx)",
-                    data=filtered_file,
-                    file_name="filtered_policies.xlsx",
-                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                )
+            # if not filtered_df.empty:
+            #     filtered_file = save_to_excel(filtered_df)
+            #     st.download_button(
+            #         label="Download Filtered Policies (.xlsx)",
+            #         data=filtered_file,
+            #         file_name="filtered_policies.xlsx",
+            #         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            #     )
 
 
         else:
