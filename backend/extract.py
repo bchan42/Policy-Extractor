@@ -10,6 +10,8 @@ import google.generativeai as genai
 import io
 import pymupdf
 
+from backend.rag import query_gemini_with_rag
+
 
 # 1. Configure Gemini API
 GOOGLE_API_KEY = st.secrets['GOOGLE_API_KEY']
@@ -94,25 +96,25 @@ def extract_text(doc: str) -> List[str]:
 
 # input: a paragraph
 # output: generated Gemini response
-def query_gemini(text):
+# def query_gemini(text):
 
-    model = genai.GenerativeModel(model_name="gemini-2.5-flash-lite")
-    prompt = (
-    f"""You’re a city planning policy expert. 
-    Extract policies related to wildfire resilience and/or mitigation from this text. 
-    A policy can be a rule, guideline, goal, or program. 
-    Make sure each policy is concise and clearly separated by a new line. 
-    If the policy is preceded by a number or label, please include the label in the extracted policy. 
-    Do not include explanations, summaries, or additional text. If there are no policies, respond with: NONE. 
-    \n{text}"""
-    )
+#     model = genai.GenerativeModel(model_name="gemini-2.5-flash-lite")
+#     prompt = (
+#     f"""You’re a city planning policy expert. 
+#     Extract policies from this text. 
+#     A policy can be a rule, guideline, goal, or program. 
+#     Make sure each policy is concise and clearly separated by a new line. 
+#     If the policy is preceded by a number or label, please include the label in the extracted policy. 
+#     Do not include explanations, summaries, or additional text. If there are no policies, respond with: NONE. 
+#     \n{text}"""
+#     )
 
-    try:
-        response = model.generate_content(prompt)
-        return response.text.strip() if response else "No response"
+#     try:
+#         response = model.generate_content(prompt)
+#         return response.text.strip() if response else "No response"
     
-    except Exception as e:
-        return f"Error: {str(e)}"
+#     except Exception as e:
+#         return f"Error: {str(e)}"
 
      
 
@@ -153,7 +155,7 @@ def process_document(doc):
 
     for i, para_text in enumerate(text_chunks):
         progress_text.write(f"Processing paragraph {i + 1}/{total_chunks}...")
-        policy = query_gemini(para_text)
+        policy = query_gemini_with_rag(para_text) # use rag
         results.append({
             "Paragraph #": i + 1,
             "Paragraph Text": para_text.strip(),
@@ -162,17 +164,6 @@ def process_document(doc):
         progress_bar.progress((i + 1) / total_chunks)
         if i < total_chunks - 1:
             time.sleep(delay_per_chunk)
-
-    # for i, para_text in enumerate(text_chunks):
-    #     st.write(f"Processing paragraph {i+1}/{total_chunks}...")
-    #     policy = query_gemini(para_text)
-    #     results.append({
-    #         "Paragraph #": i + 1,
-    #         "Paragraph Text": para_text.strip(),
-    #         "Extracted Policy": policy.strip()
-    #     })
-    #     if i < total_chunks - 1:
-    #         time.sleep(delay_per_chunk)
 
     return pd.DataFrame(results)
 

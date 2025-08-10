@@ -1,0 +1,387 @@
+[
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 1",
+      "policy": "Policy 1.1",
+      "policy_text": "Preserve the rural atmosphere of the community and assure “elbow room” in areas designated for lower density development by guiding new development into the Urban Core to conform to the historic Colony land use patterns of the City and to respect the natural environment, hillside areas, and existing neighborhoods."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 1",
+      "policy": "Policy 1.2",
+      "policy_text": "Ensure the rural character of Atascadero is preserved by respecting the historic Colony boundaries and cooperate with the County on regional planning issues surrounding the Colony."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 1",
+      "policy": "Policy 1.3",
+      "policy_text": "Enhance the rural character and appearance of the City, including commercial corridors, gateways and public facilities."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 1",
+      "policy": "Policy 1.4",
+      "policy_text": "Ensure that “darkness” remain a rural characteristic by requiring that all exterior lighting does not result in significant off-site spillage or glare."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 2",
+      "policy": "Policy 2.1",
+      "policy_text": "Ensure that new development is compatible with existing and surrounding neighborhoods."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 2",
+      "policy": "Policy 2.2",
+      "policy_text": "Allow for the orderly development of neighborhoods by allowing for the consideration of lot size reductions for lots that are significantly larger than the surrounding neighborhood."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 2",
+      "policy": "Policy 2.3",
+      "policy_text": "Incorporate Pedestrian and Transit Oriented design concepts into new residential and commercial development within the Urban Core."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 3",
+      "policy": "Policy 3.1",
+      "policy_text": "Encourage retail businesses at efficient and attractive nodes along El Camino Real and Morro Road with mixed office and residential uses between those nodes."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 4",
+      "policy": "Policy 4.1",
+      "policy_text": "Cooperate with the Atascadero Main Street Organization to promote downtown as the City’s cultural, entertainment, and commercial center, and to concentrate governmental facilities downtown."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 4",
+      "policy": "Policy 4.2",
+      "policy_text": "Enhance the appearance of the downtown area and improve pedestrian circulation."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 5",
+      "policy": "Policy 5.1",
+      "policy_text": "Reduce multi-family densities and increase single-family lot sizes as site slope increases."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 5",
+      "policy": "Policy 5.2",
+      "policy_text": "Require hillside development and subdivisions to blend in with surrounding topography."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 5",
+      "policy": "Policy 5.3",
+      "policy_text": "Prevent unnecessarily intensive grading of development sites."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 6",
+      "policy": "Policy 6.1",
+      "policy_text": "Ensure that development does not degrade scenic and sensitive areas, including historic sites, creeks, riparian corridors, wetlands, woodlands, hillsides and other valuable habitats."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 6",
+      "policy": "Policy 6.2",
+      "policy_text": "Protect prehistoric cultural resources from disturbance associated with development."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 6",
+      "policy": "Policy 6.3",
+      "policy_text": "Encourage conservation and preservation of neighborhoods, Colony Homes and sound housing, including places and buildings of historical and architectural significance."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 6",
+      "policy": "Policy 6.4",
+      "policy_text": "Encourage conservation and preservation of structures and houses that have historical and architectural significance."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 7",
+      "policy": "Policy 7.1",
+      "policy_text": "Ensure that the native trees of Atascadero are protected from new development in order to retain the natural character of the community."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 7",
+      "policy": "Policy 7.2",
+      "policy_text": "Protect and replenish native tree populations, including saplings."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 8",
+      "policy": "Policy 8.1",
+      "policy_text": "Ensure that development along Atascadero Creek, Graves Creeks, the Salinas River, blue line creeks, and natural springs, lakes, or other riparian areas does not interrupt natural flows or adversely impact riparian ecosystems and water quality."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 8",
+      "policy": "Policy 8.2",
+      "policy_text": "Establish and maintain setbacks and development standards for creek side development."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 8",
+      "policy": "Policy 8.3",
+      "policy_text": "Preserve public creek reserves for public access, and ensure that recreational use does not impact habitat value and open space qualities."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 8",
+      "policy": "Policy 8.4",
+      "policy_text": "Review and regulate all proposed on-site wastewater disposal systems to protect public health and water quality."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 8",
+      "policy": "Policy 8.5",
+      "policy_text": "The City shall implement a storm water control program consistent with the requirements of the National Pollution Discharge Elimination System (NPDES) Permit Program (Phase II)."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 9",
+      "policy": "Policy 9.1",
+      "policy_text": "Allow agricultural practices, including keeping livestock and farm animals, on parcels of appropriate size in Rural Estate, Suburban Estate, and Single Family Residential areas, provided that natural features and residential neighbors will not be adversely impacted."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 9",
+      "policy": "Policy 9.2",
+      "policy_text": "Adequately regulate allowed agricultural practices and keeping of domestic animals on rural and agricultural lands consistent with the farm animal regulations of the City Zoning Ordinance."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 10",
+      "policy": "Policy 10.1",
+      "policy_text": "Ensure efficient and adequate solid waste disposal by reducing waste volumes through recycling and other methods."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 10",
+      "policy": "Policy 10.2",
+      "policy_text": "Support ongoing water conservation efforts."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 10",
+      "policy": "Policy 10.3",
+      "policy_text": "Support regional efforts to maintain clean air."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 10",
+      "policy": "Policy 10.4",
+      "policy_text": "Ensure that development in mineral resource areas is appropriate and compatible with existing uses."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 10",
+      "policy": "Policy 10.5",
+      "policy_text": "Encourage soil conservation by minimizing grading and preventing erosion."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 10",
+      "policy": "Policy 10.6",
+      "policy_text": "Utilize new technologies to improve convenience for City residents, reduce dependency on nonrenewable resources, increase ecological and financial efficiencies, and better inform the citizenry."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 11",
+      "policy": "Policy 11.1",
+      "policy_text": "Acquire parkland needed for future development of park and recreation facilities and ensure that park improvements are consistent with adopted master plans to accommodate future growth."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 11",
+      "policy": "Policy 11.2",
+      "policy_text": "Encourage joint use of school facilities for public recreation purposes."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 11",
+      "policy": "Policy 11.3",
+      "policy_text": "Encourage park development on or adjacent to schools where appropriate."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 11",
+      "policy": "Policy 11.4",
+      "policy_text": "Encourage cooperative park and facility development programs."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 11",
+      "policy": "Policy 11.5",
+      "policy_text": "Develop a method of financing park and recreational facilities and services throughout the City using a variety of revenue sources."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 12",
+      "policy": "Policy 12.1",
+      "policy_text": "Provide specialized recreation opportunities based on projected needs and standards identified in parks master plans."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 12",
+      "policy": "Policy 12.2",
+      "policy_text": "Emphasize the importance of recreation facilities as community resources."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 12",
+      "policy": "Policy 12.3",
+      "policy_text": "Develop and implement a program to improve water quality in Atascadero Lake with specific water quality standards to be provided in the Parks and Recreation Master Plan."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 13",
+      "policy": "Policy 13.1",
+      "policy_text": "Facilitate convenient location of goods and services needed by local residents."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 13",
+      "policy": "Policy 13.2",
+      "policy_text": "Encourage planned office development in appropriate locations."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 13",
+      "policy": "Policy 13.3",
+      "policy_text": "Expand tourist commercial nodes to serve the traveling public at freeway interchanges and develop tourist destinations based on the Atascadero's rural character."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 13",
+      "policy": "Policy 13.4",
+      "policy_text": "The City shall continue to take a long range view of its fiscal condition, and specifically the possibility of enhancing revenues, in order to maintain and, where ever possible and desirable, enhance current levels of service."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 14",
+      "policy": "Policy 14.1",
+      "policy_text": "Encourage existing uses to continue providing needed products and services."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 14",
+      "policy": "Policy 14.2",
+      "policy_text": "Attract new development and land uses that provide jobs and services for residents, provided that those uses are consistent with the City’s character."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 14",
+      "policy": "Policy 14.3",
+      "policy_text": "Plan for a regional commercial center near Highway 101."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 14",
+      "policy": "Policy 14.4",
+      "policy_text": "Ensure that City regulations and processes support economic development opportunities."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 15",
+      "policy": "Policy 15.1",
+      "policy_text": "Growth should be directed to areas where services can be provided in a cost-effective manner."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 15",
+      "policy": "Policy 15.2",
+      "policy_text": "Maintain an updated Capital Improvements Program (CIP) that forecasts needs at least five years into the future and conforms to General Plan policies and programs."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 15",
+      "policy": "Policy 15.3",
+      "policy_text": "Ensure that adequate service capacity and facilities exist prior to approving new development."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 15",
+      "policy": "Policy 15.4",
+      "policy_text": "Extend services only when the City has funding for additional improvements identified in the CIP."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 15",
+      "policy": "Policy 15.5",
+      "policy_text": "Two tiers of public service will be provided within the City based on the Urban Services Line (USL)."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 15",
+      "policy": "Policy 15.6",
+      "policy_text": "Ensure that new development pays the cost of providing and/or installing all capital facilities needed to support it, including the infrastructure necessary to attract high-tech and professional support businesses."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 15",
+      "policy": "Policy 15.7",
+      "policy_text": "Continue to support effective regional planning for solid and hazardous waste disposal."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 15",
+      "policy": "Policy 15.8",
+      "policy_text": "Support expansion of the County library."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 15",
+      "policy": "Policy 15.9",
+      "policy_text": "Ensure high quality educational facilities and services are provided to the community."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "Goal LOC 15",
+      "policy": "Policy 15.10",
+      "policy_text": "Require public agency and private utilities development projects in the City to conform to City site improvement standards."
+    },
+    {
+      "element": "Land Use, Open Space and Conservation Element",
+      "goal": "",
+      "policy": "Policy 16.1",
+      "policy_text": "The General Plan shall be adopted by City Council resolution."
+    },
+    {
+      "element": "Circulation Element",
+      "goal": "Goal CIR 1",
+      "policy": "Policy 1.1",
+      "policy_text": "Plan, fund and implement circulation improvements necessary to comply with adopted City safety and level of service standards, and the General Plan Circulation Diagram."
+      },
+      {
+        "element": "Circulation Element",
+        "goal": "Goal CIR 1",
+        "policy": "Policy 1.2",
+        "policy_text": "Provide regional facilities to minimize through-traffic intrusion on local streets and to avoid barriers to local traffic."
+      },
+      {
+        "element": "Circulation Element",
+        "goal": "Goal CIR 1",
+        "policy": "Policy 1.3",
+        "policy_text": "Maintain LOS C or better as the standard at all intersections and on all arterial and collector roads. Upon City Council approval, accept LOS D where residences are not directly impacted and improvements to meet the City’s standard would be prohibitively costly or disruptive."
+      },
+      {
+      "element": "Circulation Element",
+      "goal": "Goal CIR 1",
+      "policy": "Policy 1.4",
+      "policy_text": "Preserve the winding, tree-lined nature of the city street system in hillside areas."
+      },
+      {
+        "element": "Circulation Element",
+        "goal": "Goal CIR 1",
+        "policy": "Policy 1.5",
+        "policy_text": "Maintain an adequate and well-designed supply of off-street parking, particularly in commercial, industrial, and higher- density residential areas."
+    }
+  ]
+  
