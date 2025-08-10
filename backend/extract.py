@@ -120,7 +120,6 @@ def query_gemini(text):
 
 # input: doc path
 # output: dictionary of extracted policies
-@st.cache_data(show_spinner="Extracting policies from document...")
 def process_document(doc):
 
     text_chunks = extract_text(doc)
