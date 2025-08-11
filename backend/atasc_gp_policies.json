@@ -382,6 +382,217 @@
         "goal": "Goal CIR 1",
         "policy": "Policy 1.5",
         "policy_text": "Maintain an adequate and well-designed supply of off-street parking, particularly in commercial, industrial, and higher- density residential areas."
-    }
+    },
+    {
+        "element": "Circulation Element",
+        "goal": "Goal CIR 2",
+        "policy": "Policy 2.1",
+        "policy_text": "Provide for a comprehensive system of creekside trails, roadside pathways, equestrian trails, multi-use trails and bikeways to connect neighborhoods, schools, commercial, and recreation areas, in accordance with the Bikeway and Trail Plan."
+      },
+      {
+        "element": "Circulation Element",
+        "goal": "Goal CIR 2",
+        "policy": "Policy 2.2",
+        "policy_text": "Accommodate bicycles at major destinations including downtown, bus stops, schools, and other public facilities."
+      },
+      {
+      "element": "Circulation Element",
+      "goal": "Goal CIR 2",
+      "policy": "Policy 2.3",
+      "policy_text": "Promote walking as an alternative to vehicle travel in retail district and multi-family areas."
+      },
+      {
+        "element": "Circulation Element",
+        "goal": "Goal CIR 3",
+        "policy": "Policy 3.1",
+        "policy_text": "Promote alternatives to single-occupancy vehicle travel, particularly for commute trips."
+      },
+      {
+        "element": "Circulation Element",
+        "goal": "Goal CIR 3",
+        "policy": "Policy 3.2",
+        "policy_text": "Encourage expansion of public transit as needed to meet the changing needs of the area for local and regional access, including fixed route and demand response where appropriate."
+      },
+      {
+        "element": "Circulation Element",
+        "goal": "Goal CIR 3",
+        "policy": "Policy 3.3",
+        "policy_text": "Comply with the Transportation Demand Management program requirements of the San Luis Obispo County Clean Air Plan to reduce peak period trip generation."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 1",
+        "policy": "Policy 1.1",
+        "policy_text": "Support response programs that provide emergency and other services to the public when a disaster occurs."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 1",
+        "policy": "Policy 1.2",
+        "policy_text": "Help prepare and organize residents to respond appropriately to disasters."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 1",
+        "policy": "Policy 1.3",
+        "policy_text": "Coordinate with County and State agencies, news media, and others working to reduce the risks of disasters through effective preparedness, response and recovery."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 1",
+        "policy": "Policy 1.4",
+        "policy_text": "Expand and update the database of safety related information, including Geographic Information System (GIS) data, and convey that information to the public and decision makers."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 1",
+        "policy": "Policy 1.5",
+        "policy_text": "Perform assessments aimed at reducing or eliminating long-term risks to improve the efficiency and decrease the cost of disaster response and recovery."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 1",
+        "policy": "Policy 1.6",
+        "policy_text": "Facilitate long-term recovery following a disaster."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 2",
+        "policy": "Policy 2.1",
+        "policy_text": "Enforce federal regulations regarding placement of structures in floodplains, and maintain appropriate standards for development in flood-prone and poorly drained areas (refer to Figure II-8)."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 2",
+        "policy": "Policy 2.2",
+        "policy_text": "Reduce flood damage in areas known to be prone to flooding."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 2",
+        "policy": "Policy 2.3",
+        "policy_text": "Prepare the City to respond to flood emergencies."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 2",
+        "policy": "Policy 2.4",
+        "policy_text": "Minimize the risk of dam failure."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 3",
+        "policy": "Policy 3.1",
+        "policy_text": "Carefully site and configure new development in higher fire risk areas"
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 3",
+        "policy": "Policy 3.2",
+        "policy_text": "Plan for adequate facilities, equipment, and personnel to meet fire fighting demands."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 3",
+        "policy": "Policy 3.3",
+        "policy_text": "Sustain the ability of the Fire Department to respond to emergencies."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 3",
+        "policy": "Policy 3.4",
+        "policy_text": "Adopt programs to reduce the impacts of fires."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 4",
+        "policy": "Policy 4.1",
+        "policy_text": "Ensure that developments, structures, and public facilities adequately address geologic and seismic hazards."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 4",
+        "policy": "Policy 4.2",
+        "policy_text": "Ensure that structures are designed and located to withstand strong groundshaking, liquefaction, and seismic settlement."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 4",
+        "policy": "Policy 4.3",
+        "policy_text": "Avoid development in areas at risk for slope failure when possible, and ensure that hillside developments employ appropriate design and construction techniques."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 4",
+        "policy": "Policy 4.4",
+        "policy_text": "Improve the ability of City personnel and residents to respond to seismic emergencies."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 5",
+        "policy": "Policy 5.1",
+        "policy_text": "Reduce the potential for exposure to humans and the environment from hazardous substances."
+      }, 
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 5",
+        "policy": "Policy 5.2",
+        "policy_text": "Reduce the potential for pesticide exposure to humans and the environment."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 5",
+        "policy": "Policy 5.3",
+        "policy_text": "Minimize potential hazards and spills from oil and gas pipelines and underground storage tanks."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 5",
+        "policy": "Policy 5.4",
+        "policy_text": "Support County efforts to maintain a high level of radiation emergency preparedness and ensure that the public receives necessary information about the Diablo Canyon Power Plant."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "Goal SFN 5",
+        "policy": "Policy 5.5",
+        "policy_text": "Address unreinforced masonry buildings consistent with State Law."
+      },
+
+      {
+        "element": "Safety and Noise Element",
+        "goal": "",
+        "policy": "Policy 1",
+        "policy_text": "The noise standards in this chapter represent maximum acceptable noise levels. New development should minimize noise exposure and noise generation. The City shall maintain a Noise Ordinance that implements the requirements of the Noise Element."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "",
+        "policy": "Policy 2",
+        "policy_text": "New development of noise-sensitive land uses shall not be permitted in areas exposed to existing or projected future levels of noise from transportation noise sources which exceed 60 dBn or CNEL (70 Ld,/CNEL for playgrounds and neighborhood parks) unless the project design includes effective mitigation measures to reduce noise in outdoor activity areas and interior spaces to or below the levels specified for the given land use in Table IV-3."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "",
+        "policy": "Policy 3",
+        "policy_text": "Noise created by new transportation noise sources, including roadway improvement projects, shall be mitigated so as not to exceed the levels specified in Table IV-3 within the outdoor activity areas and interior spaces of existing noise sensitive land uses.."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "",
+        "policy": "Policy 4",
+        "policy_text": "New development of noise-sensitive land uses shall not be permitted where the noise level due to existing stationary noise sources will exceed the noise level standards of Table IV-4 unless effective noise mitigation measures have been incorporated into the design of the development to reduce noise exposure to or below the levels specified in Table IV-4."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "",
+        "policy": "Policy 5",
+        "policy_text": "Noise created by new proposed stationary noise sources or existing stationary noise sources which undergo modifications that may increase noise levels shall be mitigated so as not to exceed the noise level standards of Table IV-4 on lands designated for noise-sensitive uses. This policy does not apply to noise levels associated with agricultural operations."
+      },
+      {
+        "element": "Safety and Noise Element",
+        "goal": "",
+        "policy": "Policy 6",
+        "policy_text": "The City shall consider implementing mitigation measures where existing noise levels produce significant noise impacts to noise-sensitive land uses or where new development may result in cumulative increases of noise upon noise-sensitive land uses."
+      }
   ]
   
