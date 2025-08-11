@@ -37,19 +37,15 @@ def query_gemini_with_rag(paragraph):
     examples = retrieve_examples(paragraph, k=3)
     example_text = "\n".join(examples)
 
-    prompt = f"""
-You are a city planning policy expert.
+    prompt = f"""You are a city planning policy expert.
 
-Below are real examples of policies:
-{example_text}
+            Below are real examples of policies: {example_text}
+            Now, from the following paragraph, extract ONLY policies.
+            A policy can be a rule, guideline, goal, or program.
+            If the policy is preceded by a number or label, include it.
+            Do not include explanations, summaries, or policies not explicitly stated.
+            If no policies are present, respond with: NONE.
 
-Now, from the following paragraph, extract ONLY policies.
-A policy can be a rule, guideline, goal, or program.
-If the policy is preceded by a number or label, include it.
-Do not include explanations, summaries, or policies not explicitly stated.
-If no policies are present, respond with: NONE.
-
-Paragraph:
-{paragraph}
-"""
+            Page: {paragraph}"""
+    
     return query_gemini(prompt)  # Your existing function

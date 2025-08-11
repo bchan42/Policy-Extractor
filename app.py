@@ -187,7 +187,7 @@ with StartTab:
 
     doc = st.file_uploader("Choose a file (PDF, DOCX, or TXT)", type=["pdf", "docx", "txt"])
 
-# CODE FOR EXTRACTING POLICIES
+    # CODE FOR EXTRACTING POLICIES
     if doc:
         df = process_document(doc)
         st.session_state["df"] = df
