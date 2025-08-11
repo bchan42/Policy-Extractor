@@ -353,6 +353,7 @@
       "policy": "Policy 16.1",
       "policy_text": "The General Plan shall be adopted by City Council resolution."
     },
+    
     {
       "element": "Circulation Element",
       "goal": "Goal CIR 1",
@@ -419,6 +420,7 @@
         "policy": "Policy 3.3",
         "policy_text": "Comply with the Transportation Demand Management program requirements of the San Luis Obispo County Clean Air Plan to reduce peak period trip generation."
       },
+
       {
         "element": "Safety and Noise Element",
         "goal": "Goal SFN 1",
@@ -557,7 +559,6 @@
         "policy": "Policy 5.5",
         "policy_text": "Address unreinforced masonry buildings consistent with State Law."
       },
-
       {
         "element": "Safety and Noise Element",
         "goal": "",
@@ -593,6 +594,73 @@
         "goal": "",
         "policy": "Policy 6",
         "policy_text": "The City shall consider implementing mitigation measures where existing noise levels produce significant noise impacts to noise-sensitive land uses or where new development may result in cumulative increases of noise upon noise-sensitive land uses."
+      },
+
+      {
+        "element": "Housing Element",
+        "goal": "HOS 1",
+        "policy": "Policy 1.1",
+        "policy_text": "Encourage new housing, including mixed-use projects in commercial land use areas, to meet the needs of all household types in the City."
+      },
+      {
+        "element": "Housing Element",
+        "goal": "HOS 2",
+        "policy": "Policy 2.1",
+        "policy_text": "Encourage conservation and preservation of neighborhoods and sound housing."
+      },
+      {
+        "element": "Housing Element",
+        "goal": "HOS 2",
+        "policy": "Policy 2.2",
+        "policy_text": "Encourage conservation and preservation of houses that have historical and architectural significance."
+      },
+      {
+        "element": "Housing Element",
+        "goal": "HOS 3",
+        "policy": "Policy 3.1",
+        "policy_text": "Continue to make residents aware of available energy saving techniques and public utility rebates."
+      },
+      {
+        "element": "Housing Element",
+        "goal": "HOS 4",
+        "policy": "Policy 4.1",
+        "policy_text": "Support equal housing opportunities and enforcement of State and federal anti-discrimination laws."
+      },
+      {
+        "element": "Housing Element",
+        "goal": "HOS 4",
+        "policy": "Policy 4.2",
+        "policy_text": "Ensure that persons with disabilities have adequate access to housing."
+      },
+      {
+        "element": "Housing Element",
+        "goal": "HOS 4",
+        "policy": "Policy 4.3",
+        "policy_text": "Leverage State and Federal loans and grants to assist in providing affordable housing, preserving existing housing, and rehabilitating unsound housing structures."
+      },
+      {
+        "element": "Housing Element",
+        "goal": "HOS 5",
+        "policy": "Policy 5.1",
+        "policy_text": "Encourage interplay between lending institutions, the real estate and development community, and the City to better understand and address non-governmental constraints and facilitate production of affordable housing."
+      },
+      {
+        "element": "Housing Element",
+        "goal": "HOS 5",
+        "policy": "Policy 5.2",
+        "policy_text": "Help lower development costs where feasible, especially for low- and moderate-income housing units."
+      },
+      {
+        "element": "Housing Element",
+        "goal": "HOS 6",
+        "policy": "Policy 6.1",
+        "policy_text": "Review projects in as timely a manner as possible, while maintaining adequate public involvement and fulfilling the appropriate requirements of State and local laws."
+      },
+      {
+        "element": "Housing Element",
+        "goal": "HOS 6",
+        "policy": "Policy 6.2",
+        "policy_text": "[NEW] Maintain consistency and compatibility between the Development Code and General Plan."
       }
   ]
   
