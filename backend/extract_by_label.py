@@ -76,15 +76,19 @@ def extract_text(doc: str) -> List[str]:
 ##################################################################
 # 3. Query Gemini by defining a policy based on user input (policy labels)
 
-def query_gemini_policy_labels(page_text, policy_labels):
+def query_gemini_policy_labels(page_text, policy_labels, description):
 
     model = genai.GenerativeModel(model_name="gemini-2.5-flash-lite")
 
     prompt = f"""You are a city planning policy expert.
-            From the following page, extract only policies preceded by labels that look like this: {policy_labels}.
-            Do not include explanations, summaries, or policies not labelled with the format provided. 
-            Preserve the exact wording for each extracted policy. 
-            If no policies are present, respond with: NONE.
+            TASK:
+            From the following page, extract ONLY complete policy text that starts with a label in this format: {description}
+            Example formats: {policy_labels}
+
+            INSTRUCTIONS:
+            Do not include explanations, summaries, or anything without a valid label. 
+            Preserve exact wording, punctuation, and line breaks.
+            If no matching policies are found, output ONLY: NONE
 
             Page: {page_text}
             """
@@ -99,7 +103,7 @@ def query_gemini_policy_labels(page_text, policy_labels):
 ##################################################################
 # 4. Run the prompt on the document
 
-def process_document_with_labels(doc, policy_labels):
+def process_document_with_labels(doc, policy_labels, description):
 
     # Try extracting page-by-page
     text_chunks = extract_text_with_page_numbers(doc)
@@ -127,11 +131,11 @@ def process_document_with_labels(doc, policy_labels):
     for i, (page_number,para_text) in enumerate(page_chunks):
         # Trying to read in pages instead of paragraphs. Change to paragraphs if needed
         progress_text.write(f"Processing page {i + 1}/{total_chunks}...")
-        policy = query_gemini_policy_labels(para_text, policy_labels) 
+        policy = query_gemini_policy_labels(para_text, policy_labels, description) 
         results.append({
             "Page #": page_number,
             "Page Text": para_text.strip(),
-            "Extracted Policies": policy.strip()
+            "Extracted Policy": policy.strip()
         })
         progress_bar.progress((i + 1) / total_chunks)
         if i < total_chunks - 1:
