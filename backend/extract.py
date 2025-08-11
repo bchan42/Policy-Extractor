@@ -22,7 +22,7 @@ genai.configure(api_key=GOOGLE_API_KEY)
 
 # Helper function to extract text from pdf using fitz:
 # Increase gap_threshold for larger paragraph chunks
-def extract_paragraphs_from_pdf(file_obj, gap_threshold=20):
+def extract_paragraphs_from_pdf(file_obj, gap_threshold=15):
 
     doc = pymupdf.open(stream=file_obj, filetype="pdf")
     paragraphs = []
