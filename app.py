@@ -6,6 +6,7 @@ import time
 
 from backend.extract import process_document, save_to_excel
 from backend.filter import tag_policy_element
+from backend.extract_by_label import process_document_with_labels
 
 ##################################################################
 # Set up Gemini API
@@ -298,15 +299,80 @@ with FilteringTab:
 ##################################################################
 # Extract By Label
 with ExtractLabelTab:
+    
+    st.markdown("""                
+                
+        **Do you have a document with policies that are clearly labelled?**
+                
+        You can extract policies preceded by specific labels in this tab.
+                
+    """)
 
-    st.markdown("""
-                Do you have a document with policies clearly labelled? 
-                You can extract policies by specific labels here.
-
-                """)
-
-    st.markdown("Here is an example of a document with clear policy labels: ")
+    # Insert example of policy labels
+    st.markdown("---")
+    st.markdown("    ℹ️  **Example** of a document with clear policy labels: ")
 
     st.image("images/extract_by_label_example.jpg")
+
+    st.markdown("   ✅  **Policy 6.2:**,  **Policy 6.3:** are valid labels for policies in this document. ")
+    st.markdown("   ✅  **Programs:** is also a valid label IF you want to extract programs and policies. ")
+    st.markdown("---")
+
+    st.markdown("""                
+                
+        Take a moment to identify policy labels in your own document.
+                
+        We recommend providing **at least 3 examples** of labels for better results.
+                
+    """)
+
+    # Wrap policy label entry box in a purple box
+    st.warning("Enter policy labels (comma separated, e.g. 'Policy 6.3:, Policy 6.1:, Goal 3.2:') below: ", icon="✏️")
+
+    policy_labels_input = st.text_input("", value="Type policy labels here...")
+
+    # Process input into a list of labels
+    policy_labels = [label.strip() for label in policy_labels_input.split(",") if label.strip()]
+
+    # Now prompt user to upload document
+    st.warning("Now click the “Drag and Drop” button to upload your planning document: ", icon="🤖")
+
+    doc = st.file_uploader("Choose a file (PDF, DOCX, or TXT)", type=["pdf", "docx", "txt"])
+
+    # CODE FOR EXTRACTING POLICIES
+    if doc:
+        df = process_document_with_labels(doc, policy_labels)
+        st.session_state["df"] = df
+
+        st.success("Extraction complete! Compare text page-by-page with extracted policies:")
+
+        # Helpful instructions before showing DataFrame
+        st.markdown(
+            """
+            ℹ️ **Tips for viewing the table below**:
+            - Hover over the table to see icons at top-right of the table. 
+                - Click the **full-screen** icon to expand the view.
+                    - **Double-click** on any cell to view full text if it's cut off.
+                - Click the **magnifying glass 🔍** icon to search for specific words.
+                - Click the **download** icon to download the data as a CSV file. 
+            """
+        )
+
+        # Display DataFrame directly (scrollable, clean layout)
+        st.dataframe(df, use_container_width=True)
+
+        # Allow download as Excel
+        excel_file = save_to_excel(df)
+        st.download_button(
+            label="Download Extracted Policies (.xlsx)",
+            data=excel_file,
+            file_name="extracted_policies.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+
+    
+
+
+
 
 

@@ -1,0 +1,143 @@
+from datetime import datetime
+import time
+import pandas as pd
+from typing import List, Dict
+
+import pdfplumber
+import docx
+import streamlit as st
+import google.generativeai as genai
+import io
+import pymupdf
+
+##################################################################
+# 1. Configure Gemini API
+GOOGLE_API_KEY = st.secrets['GOOGLE_API_KEY']
+genai.configure(api_key=GOOGLE_API_KEY)
+
+##################################################################
+# 2. Extract text from uploaded document (pdf / docx / txt)
+
+# This function extracts pages from pdfs
+def extract_text_with_page_numbers(file_obj):
+    doc = pymupdf.open(stream=file_obj, filetype="pdf")
+    page_texts = []
+
+    for page_num, page in enumerate(doc, start=1):
+        text = page.get_text("text").strip()
+        page_texts.append({
+            "page_num": page_num,
+            "text": text
+        })
+
+    return page_texts
+
+# This function extracts text from different document types
+def extract_text(doc: str) -> List[str]:
+
+    chunks = []
+
+    if doc.name.endswith(".pdf"):
+        # with pdfplumber.open(doc) as pdf:
+        #     for i, page in enumerate(pdf.pages):
+        #         text = page.extract_text()
+        #         if text:
+        #             paragraphs = [p.strip() for p in text.split('\n\n') if p.strip()]
+        #             para_chunks.extend(paragraphs)
+        # Extract chunks by paragraph
+        # pdf_bytes = doc.read()
+        # pdf_obj = io.BytesIO(pdf_bytes)
+        # para_chunks = extract_paragraphs_from_pdf(pdf_obj)
+
+        # Extract chunks page-by-page
+        pdf_bytes = doc.read()
+        pdf_obj = io.BytesIO(pdf_bytes)
+
+        page_texts = extract_text_with_page_numbers(pdf_obj)
+        chunks = [(page["page_number"], page["text"]) for page in page_texts if page["text"]]
+        return chunks
+
+
+    elif doc.name.endswith(".docx"):
+        doc_obj = docx.Document(doc)
+        chunks = [para.text.strip() for para in doc_obj.paragraphs if para.text.strip()]
+        return chunks
+
+    elif doc.name.endswith(".txt"):
+        content = doc.read().decode()
+        paragraphs = [p.strip() for p in content.split('\n\n') if p.strip()]
+        chunks = paragraphs
+        return chunks
+
+    else:
+        st.error("Unsupported file type.")
+        st.stop()
+
+##################################################################
+# 3. Query Gemini by defining a policy based on user input (policy labels)
+
+def query_gemini_policy_labels(page_text, policy_labels):
+
+    model = genai.GenerativeModel(model_name="gemini-2.5-flash-lite")
+
+    prompt = f"""You are a city planning policy expert.
+            From the following page, extract only policies preceded by labels that look like this: {policy_labels}.
+            Do not include explanations, summaries, or policies not labelled with the format provided. 
+            Preserve the exact wording for each extracted policy. 
+            If no policies are present, respond with: NONE.
+
+            Page: {page_text}
+            """
+   
+    try:
+        response = model.generate_content(prompt)
+        return response.text.strip() if response else "No response"
+    
+    except Exception as e:
+        return f"Error: {str(e)}"
+    
+##################################################################
+# 4. Run the prompt on the document
+
+def process_document_with_labels(doc, policy_labels):
+
+    # Try extracting page-by-page
+    text_chunks = extract_text_with_page_numbers(doc)
+    page_chunks = [(p["page_num"], p["text"]) for p in text_chunks if p["text"]]
+    total_chunks = len(text_chunks)
+    
+    # Gemini rate limit: 15 QPM → 1 query every 4 seconds
+    delay_per_chunk = 4.1  # Add slight buffer
+    estimated_time_sec = total_chunks * delay_per_chunk
+    estimated_time_min = estimated_time_sec / 60
+
+    if total_chunks > 1000:
+        st.warning("Too many chunks for daily limit (1000/day). Consider splitting the document.")
+        return {}
+
+    # Trying to read in pages instead of paragraphs. Change to paragraphs if needed
+    st.info(f"Reading {total_chunks} pages. Estimated processing time: ~{estimated_time_min:.1f} minutes.")
+
+    results = []
+
+    progress_bar = st.progress(0)
+    progress_text = st.empty()
+
+    # Change back to --> for i, para_text in enumerate(text_chunks) if you don't want to go page-by-page
+    for i, (page_number,para_text) in enumerate(page_chunks):
+        # Trying to read in pages instead of paragraphs. Change to paragraphs if needed
+        progress_text.write(f"Processing page {i + 1}/{total_chunks}...")
+        policy = query_gemini_policy_labels(para_text, policy_labels) 
+        results.append({
+            "Page #": page_number,
+            "Page Text": para_text.strip(),
+            "Extracted Policies": policy.strip()
+        })
+        progress_bar.progress((i + 1) / total_chunks)
+        if i < total_chunks - 1:
+            time.sleep(delay_per_chunk)
+
+    return pd.DataFrame(results)
+
+##################################################################
+# END 
