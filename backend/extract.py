@@ -96,25 +96,25 @@ def extract_text(doc: str) -> List[str]:
 
 # input: a paragraph
 # output: generated Gemini response
-# def query_gemini(text):
+def query_gemini(text):
 
-#     model = genai.GenerativeModel(model_name="gemini-2.5-flash-lite")
-#     prompt = (
-#     f"""You’re a city planning policy expert. 
-#     Extract policies from this text. 
-#     A policy can be a rule, guideline, goal, or program. 
-#     Make sure each policy is concise and clearly separated by a new line. 
-#     If the policy is preceded by a number or label, please include the label in the extracted policy. 
-#     Do not include explanations, summaries, or additional text. If there are no policies, respond with: NONE. 
-#     \n{text}"""
-#     )
+    model = genai.GenerativeModel(model_name="gemini-2.5-flash-lite")
+    prompt = (
+    f"""You’re a city planning policy expert. 
+    Extract policies from this text. 
+    A policy can be a rule, guideline, goal, or program. 
+    Make sure each policy is concise and clearly separated by a new line. 
+    If the policy is preceded by a number or label, please include the label in the extracted policy. 
+    Do not include explanations, summaries, or additional text. If there are no policies, respond with: NONE. 
+    \n{text}"""
+    )
 
-#     try:
-#         response = model.generate_content(prompt)
-#         return response.text.strip() if response else "No response"
+    try:
+        response = model.generate_content(prompt)
+        return response.text.strip() if response else "No response"
     
-#     except Exception as e:
-#         return f"Error: {str(e)}"
+    except Exception as e:
+        return f"Error: {str(e)}"
 
      
 
