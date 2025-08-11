@@ -130,8 +130,8 @@ st.markdown(
 
 # TABBED INTERFACE
 
-# Create tabs for Quick Start, About sections
-StartTab, FilteringTab, AboutTab = st.tabs(["Quick Start", "Filtering", "About"])
+# Create tabs for the following sections:
+StartTab, ExtractLabelTab, FilteringTab, AboutTab = st.tabs(["Quick Start", "Extract By Label", "Filtering", "About"])
 
 ##################################################################
 
@@ -294,3 +294,19 @@ with FilteringTab:
 
     else:
         st.warning("Please upload and process a document in the Quick Start tab first.")
+
+##################################################################
+# Extract By Label
+with ExtractLabelTab:
+
+    st.markdown("""
+                Do you have a document with policies clearly labelled? 
+                You can extract policies by specific labels here.
+
+                """)
+
+    st.markdown("Here is an example of a document with clear policy labels: ")
+
+    st.image("images/extract_by_label_example.jpg")
+
+

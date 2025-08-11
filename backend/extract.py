@@ -129,7 +129,6 @@ def query_gemini(prompt):
     except Exception as e:
         return f"Error: {str(e)}"
      
-
 # 4. Process document by paragraph chunks (Iterate thru each paragrpah)
 
 # input: doc path
@@ -140,6 +139,7 @@ def process_document(doc):
 
     # Try extracting page-by-page
     text_chunks = extract_text_with_page_numbers(doc)
+    page_chunks = [(p["page_num"], p["text"]) for p in text_chunks if p["text"]]
     total_chunks = len(text_chunks)
     
     # Gemini rate limit: 15 QPM → 1 query every 4 seconds
@@ -170,7 +170,7 @@ def process_document(doc):
     progress_text = st.empty()
 
     # Change back to --> for i, para_text in enumerate(text_chunks) if you don't want to go page-by-page
-    for i, (page_number,para_text) in enumerate(text_chunks):
+    for i, (page_number,para_text) in enumerate(page_chunks):
         # Trying to read in pages instead of paragraphs. Change to paragraphs if needed
         progress_text.write(f"Processing page {i + 1}/{total_chunks}...")
         policy = query_gemini_with_rag(para_text) # use rag

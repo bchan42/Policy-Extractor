@@ -40,7 +40,7 @@ def query_gemini_with_rag(paragraph):
     prompt = f"""You are a city planning policy expert.
 
             Below are real examples of policies: {example_text}
-            Now, from the following paragraph, extract ONLY policies.
+            Now, from the following page, extract ONLY policies.
             A policy can be a rule, guideline, goal, or program.
             If the policy is preceded by a number or label, include it.
             Do not include explanations, summaries, or policies not explicitly stated.
