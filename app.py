@@ -329,12 +329,13 @@ with ExtractLabelTab:
 
     st.markdown("""                
                 
-        Take a moment to identify policy labels in your own document.
+        🤔 **Take a moment to identify policy labels in your own document.**
                 
         If you have multiple formats of labels, please list them all.
 
         Examples of labels that all follow different formats:  
         - GOAL LOC 2.
+        - GOAL LOC 10. (multiple digits may be read as a different format)
         - Goal LOC 9.  (lowercase counts as a different format)
         - Goal SFN 2.  (SFN is not the same as LOC)
                 
@@ -356,8 +357,11 @@ with ExtractLabelTab:
     #     st.session_state.policy_labels = ""
     #     st.experimental_rerun()
 
-    st.warning("""(Optional) Enter labels you would like to exclude from being extracted as policies. \n 
-               For example, if you would like to exclude programs, enter the label 'Programs:' 
+    st.warning("""
+               
+               (Optional) Enter labels you would like to exclude from being extracted as policies. 
+               
+               For example, if you would like to exclude programs, a label to exclude may be 'Programs:' 
                """, icon="✏️")
 
 
