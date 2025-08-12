@@ -160,25 +160,42 @@ def find_policy_labels(text, label_patterns):
 ##################################################################
 # 4. Query Gemini by defining a policy based on user input (policy labels)
 
-def query_gemini_policy_labels(page_text, policy_labels):
+def query_gemini_policy_labels(page_text, policy_labels, excluded_labels=None):
 
     labels_list = '\n'.join(f"- {label}" for label in policy_labels)
 
     model = genai.GenerativeModel(model_name="gemini-2.5-flash-lite")
 
-    prompt = f"""You are a city planning policy expert.
-            The following page contains policies introduced
-            by labels as defined in this list: {labels_list}
+    if excluded_labels is None:
+        prompt = f"""You are a city planning policy expert.
+                The following page contains policies introduced
+                by labels as defined in this list: {labels_list}
 
-            Please extract each policy preceded by these labels.
+                Please extract each policy preceded by these labels.
 
-            If there are multiple policies associated with the same label, group all of them under that label.
-             
-            Return the label along with the corresponding policy text.
-            If no matching policies are found, output ONLY: NONE
+                If there are multiple policies associated with the same label, group all of them under that label.
 
-            Page: {page_text}
-            """
+                Return the label along with the corresponding policy text.
+                If no matching policies are found, output ONLY: NONE
+
+                Page: {page_text}
+                """
+    else:
+        prompt = f"""You are a city planning policy expert.
+                The following page contains policies introduced
+                by labels as defined in this list: {labels_list}
+
+                Please extract each policy preceded by these labels.
+
+                Exclude any text introduced by the labels in this list: {excluded_labels}
+
+                If there are multiple policies associated with the same label, group all of them under that label.
+
+                Return the label along with the corresponding policy text.
+                If no matching policies are found, output ONLY: NONE
+
+                Page: {page_text}
+                """
    
     try:
         response = model.generate_content(prompt)
@@ -190,7 +207,7 @@ def query_gemini_policy_labels(page_text, policy_labels):
 ##################################################################
 # 5. Run the prompt on the document
 
-def process_document_with_labels(doc, policy_labels):
+def process_document_with_labels(doc, policy_labels, excluded_labels=None):
 
     # Try extracting page-by-page
     text_chunks = extract_text_with_page_numbers(doc)
@@ -218,11 +235,18 @@ def process_document_with_labels(doc, policy_labels):
     for i, (page_number,para_text) in enumerate(page_chunks):
         # Trying to read in pages instead of paragraphs. Change to paragraphs if needed
         progress_text.write(f"Processing page {i + 1}/{total_chunks}...")
-        found_labels = find_policy_labels(para_text, policy_labels)
-        if not found_labels:
+        inclusive_labels = find_policy_labels(para_text, policy_labels)
+
+        if excluded_labels is not None:
+            rejected_labels = find_policy_labels(para_text, excluded_labels)
+        else:
+            rejected_labels=None
+
+        if not inclusive_labels:
             print("No policy labels found on this page.")
             continue
-        policy = query_gemini_policy_labels(para_text, found_labels) 
+
+        policy = query_gemini_policy_labels(para_text, inclusive_labels, rejected_labels) 
         results.append({
             "Page #": page_number,
             "Page Text": para_text.strip(),

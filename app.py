@@ -328,7 +328,7 @@ with ExtractLabelTab:
     st.markdown("---")
 
     st.markdown("""                
-                e
+                
         Take a moment to identify policy labels in your own document.
                 
         If you have multiple formats of labels, please list them all.
@@ -346,19 +346,30 @@ with ExtractLabelTab:
 
     st.warning("Enter policy labels (comma separated if including multiple, e.g. 'Policy 6.3:, Goal 6.1:') below: ", icon="✏️")
 
-    if "policy_labels" not in st.session_state:
-        st.session_state.policy_labels = ""
-
-    policy_labels_input = st.text_input("Policy labels", value=st.session_state.policy_labels)
-    st.session_state.policy_labels = policy_labels_input
+    policy_labels_input = st.text_input("Policy labels")
 
     # Process input into a list of labels
     policy_labels = [label.strip() for label in policy_labels_input.split(",") if label.strip()]
 
-    # Button to clear input
-    if st.button("Clear input"):
-        st.session_state.policy_labels = ""
-        st.experimental_rerun()
+    # # Button to clear input
+    # if st.button("Clear input", key="policy_labels"):
+    #     st.session_state.policy_labels = ""
+    #     st.experimental_rerun()
+
+    st.warning("""(Optional) Enter labels you would like to exclude from being extracted as policies. \n 
+               For example, if you would like to exclude programs, enter the label 'Programs:' 
+               """, icon="✏️")
+
+
+    excluded_labels_input = st.text_input("(Optional) Labels to exclude")
+
+    # Process input into a list of labels
+    excluded_labels = [label.strip() for label in excluded_labels_input.split(",") if label.strip()]
+
+    # # Button to clear input
+    # if st.button("Clear input", key="excluded_labels"):
+    #     st.session_state.excluded_labels = ""
+    #     st.experimental_rerun()
 
     # Now prompt user to upload document
     st.warning("Now click the “Drag and Drop” button to upload your planning document: ", icon="🤖")
@@ -367,7 +378,12 @@ with ExtractLabelTab:
 
     # CODE FOR EXTRACTING POLICIES
     if doc:
-        label_df = process_document_with_labels(doc, policy_labels)
+
+        if excluded_labels is None:
+            label_df = process_document_with_labels(doc, policy_labels)
+        else:
+            label_df = process_document_with_labels(doc, policy_labels, excluded_labels)
+
         st.session_state["label_df"] = label_df
 
         st.success("Extraction complete! Compare text page-by-page with extracted policies:")
@@ -395,9 +411,6 @@ with ExtractLabelTab:
             file_name="extracted_policies.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
-
-        # Delete policy_labels in case user wants to retry 
-        policy_labels = []
 
     
 
