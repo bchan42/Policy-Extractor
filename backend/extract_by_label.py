@@ -9,6 +9,7 @@ import streamlit as st
 import google.generativeai as genai
 import io
 import pymupdf
+import re
 
 ##################################################################
 # 1. Configure Gemini API
@@ -32,6 +33,55 @@ def extract_text_with_page_numbers(file_obj):
 
     return page_texts
 
+# This function cleans pages from pdfs
+def clean_page_text(page_text):
+    lines = page_text.splitlines()
+    cleaned_lines = []
+
+    for line in lines:
+        # Remove page headers/footers:
+        # - Lines like "Page II-28" or "Page 3" (case-insensitive)
+        # - Lines that are just dates (simple YYYY or MM DD YYYY pattern)
+        # - Lines that are empty or whitespace only
+        if re.match(r"^\s*Page\s+[A-Z]*-?\d+\s*$", line, re.IGNORECASE):
+            continue
+        if re.match(r"^\s*\d{4}\s*$", line):  # just a year line
+            continue
+        if re.match(r"^\s*[A-Za-z]{3,9}\s+\d{1,2},\s*\d{4}\s*$", line):  # e.g. June 25, 2002
+            continue
+        if not line.strip():
+            continue
+
+        cleaned_lines.append(line.strip())
+
+    # Merge lines that don't end with punctuation to avoid broken sentences
+    merged_text = ""
+    for i, line in enumerate(cleaned_lines):
+        if i == len(cleaned_lines) - 1:
+            merged_text += line
+        else:
+            if re.search(r"[.?!:]$", line):
+                merged_text += line + "\n"
+            else:
+                merged_text += line + " "
+
+    # Normalize spaces
+    merged_text = re.sub(r"\s+", " ", merged_text)
+    merged_text = re.sub(r" \n ", "\n", merged_text)
+
+    return merged_text.strip()
+
+# Clean all pages in pdf
+def clean_all_pages(page_texts):
+    cleaned_pages = []
+    for page in page_texts:
+        cleaned = clean_page_text(page["text"])
+        cleaned_pages.append(cleaned)
+    # Join all pages into one big text with double newlines between pages
+    full_text = "\n\n".join(cleaned_pages)
+    return full_text
+
+
 # This function extracts text from different document types
 def extract_text(doc: str) -> List[str]:
 
@@ -53,9 +103,18 @@ def extract_text(doc: str) -> List[str]:
         pdf_bytes = doc.read()
         pdf_obj = io.BytesIO(pdf_bytes)
 
+        # Step 1: Extract raw page texts
         page_texts = extract_text_with_page_numbers(pdf_obj)
-        chunks = [(page["page_number"], page["text"]) for page in page_texts if page["text"]]
-        return chunks
+
+        # Step 2: Clean pages individually and create cleaned chunks
+        cleaned_chunks = []
+        for page in page_texts:
+            cleaned_text = clean_page_text(page["text"])
+            if cleaned_text:  # skip empty pages
+                cleaned_chunks.append((page["page_num"], cleaned_text))
+
+        # chunks = [(page["page_number"], page["text"]) for page in page_texts if page["text"]]
+        return cleaned_chunks
 
 
     elif doc.name.endswith(".docx"):
@@ -82,7 +141,7 @@ def query_gemini_policy_labels(page_text, policy_labels, description):
 
     prompt = f"""You are a city planning policy expert.
             TASK:
-            From the following page, extract ONLY complete policy text that starts with a label in this format: {description}
+            From the following page, extract ONLY policy text that starts with a label in this format, as defined here: {description}
             Example formats: {policy_labels}
 
             INSTRUCTIONS:
