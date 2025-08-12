@@ -137,16 +137,23 @@ def extract_text(doc: str) -> List[str]:
 
 # Generate a regex string
 def generate_broad_regex(s):
-    parts = re.findall(r'\w+|\d+|[^\w\s]+|\s+', s)
+    parts = re.findall(r'\w+|\d+(?:\.\d+)*|[^\w\s]+|\s+', s)
     regex_parts = []
     for part in parts:
         if part.isspace():
             regex_parts.append(r'\s+')
-        elif re.fullmatch(r'\d+(\.\d+)*', part):
-            regex_parts.append(r'[\d\.]+')
+        elif re.fullmatch(r'\d+(?:\.\d+)*', part):
+            regex_parts.append(r'\d+(?:\.\d+)*')
         elif re.fullmatch(r'\w+', part):
-            regex_parts.append(r'\w+')
+            regex_parts.append(r'\b' + re.escape(part) + r'\b')
+        elif part == "-":
+            # Allow dash OR space OR nothing
+            regex_parts.append(r'[-\s]?')
+        elif part == ":":
+            # Colon is optional
+            regex_parts.append(r'\:?')
         else:
+            # Default: escape punctuation but allow optional space
             regex_parts.append(re.escape(part))
     return ''.join(regex_parts)
 
@@ -162,20 +169,21 @@ def find_policy_labels(text, label_patterns):
 
 def query_gemini_policy_labels(page_text, policy_labels, excluded_labels=None):
 
-    labels_list = '\n'.join(f"- {label}" for label in policy_labels)
+    # labels_list = '\n'.join(f"- {label}" for label in policy_labels)
+    labels_text = " | ".join(policy_labels)
 
     model = genai.GenerativeModel(model_name="gemini-2.5-flash-lite")
 
     if excluded_labels is None:
         prompt = f"""You are a city planning policy expert.
                 The following page contains policies introduced
-                by labels as defined in this list: {labels_list}
+                by labels as defined in this list: {labels_text}
 
                 Please extract each policy preceded by these labels.
 
                 If there are multiple policies associated with the same label, group all of them under that label.
 
-                Return the label along with the corresponding policy text.
+                Return the entire label along with the corresponding policy text.
                 If no matching policies are found, output ONLY: NONE
 
                 Page: {page_text}
@@ -183,7 +191,7 @@ def query_gemini_policy_labels(page_text, policy_labels, excluded_labels=None):
     else:
         prompt = f"""You are a city planning policy expert.
                 The following page contains policies introduced
-                by labels as defined in this list: {labels_list}
+                by labels as defined in this list: {labels_text}
 
                 Please extract each policy preceded by these labels.
 
@@ -191,7 +199,7 @@ def query_gemini_policy_labels(page_text, policy_labels, excluded_labels=None):
 
                 If there are multiple policies associated with the same label, group all of them under that label.
 
-                Return the label along with the corresponding policy text.
+                Return the entire label along with the corresponding policy text.
                 If no matching policies are found, output ONLY: NONE
 
                 Page: {page_text}

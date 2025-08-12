@@ -147,7 +147,7 @@ with AboutTab:
 
     st.markdown(
         """
-        The tool processes PDFs, DOCX, or TXT files, paragraphage-by-paragraph to identify key planning policies, particularly those related to zoning, evacuation, and fire resilience.
+        The tool processes PDFs, DOCX, or TXT files, paragraph-by-paragraph to identify key planning policies, particularly those related to zoning, evacuation, and fire resilience.
         Users can also filter or prompt the model for specific topics.
         """
     )
@@ -331,11 +331,10 @@ with ExtractLabelTab:
                 
         🤔 **Take a moment to identify policy labels in your own document.**
                 
-        If you have multiple formats of labels, please list them all.
+        If you have multiple label formats, please list them all.
 
         Examples of labels that all follow different formats:  
         - GOAL LOC 2.
-        - GOAL LOC 10. (multiple digits may be read as a different format)
         - Goal LOC 9.  (lowercase counts as a different format)
         - Goal SFN 2.  (SFN is not the same as LOC)
                 
