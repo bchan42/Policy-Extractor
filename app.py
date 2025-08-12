@@ -315,7 +315,7 @@ with ExtractLabelTab:
     st.image("images/extract_by_label_example.jpg")
 
     st.markdown("   ✅  **Policy 6.2:**,  **Policy 6.3:** are valid labels for policies in this document. ")
-    st.markdown("   ✅  **Programs:** is also a valid label IF you want to extract programs and policies. ")
+    st.markdown("   ✅  **Programs:** is also a valid label IF you want to extract programs too. ")
 
     # st.markdown("   ")
     # st.markdown("   💡  This is a good description for how policies are formatted in this document: ")
@@ -328,10 +328,15 @@ with ExtractLabelTab:
     st.markdown("---")
 
     st.markdown("""                
-                
+                e
         Take a moment to identify policy labels in your own document.
                 
         If you have multiple formats of labels, please list them all.
+
+        Examples of labels that all follow different formats:  
+        - GOAL LOC 2.
+        - Goal LOC 9.  (lowercase counts as a different format)
+        - Goal SFN 2.  (SFN is not the same as LOC)
                 
     """)
 
@@ -341,10 +346,19 @@ with ExtractLabelTab:
 
     st.warning("Enter policy labels (comma separated if including multiple, e.g. 'Policy 6.3:, Goal 6.1:') below: ", icon="✏️")
 
-    policy_labels_input = st.text_input("Policy labels")
+    if "policy_labels" not in st.session_state:
+        st.session_state.policy_labels = ""
+
+    policy_labels_input = st.text_input("Policy labels", value=st.session_state.policy_labels)
+    st.session_state.policy_labels = policy_labels_input
 
     # Process input into a list of labels
     policy_labels = [label.strip() for label in policy_labels_input.split(",") if label.strip()]
+
+    # Button to clear input
+    if st.button("Clear input"):
+        st.session_state.policy_labels = ""
+        st.experimental_rerun()
 
     # Now prompt user to upload document
     st.warning("Now click the “Drag and Drop” button to upload your planning document: ", icon="🤖")
@@ -381,6 +395,9 @@ with ExtractLabelTab:
             file_name="extracted_policies.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
+
+        # Delete policy_labels in case user wants to retry 
+        policy_labels = []
 
     
 

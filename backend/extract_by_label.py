@@ -167,10 +167,13 @@ def query_gemini_policy_labels(page_text, policy_labels):
     model = genai.GenerativeModel(model_name="gemini-2.5-flash-lite")
 
     prompt = f"""You are a city planning policy expert.
-            The following page contains multiple policies. The policies are introduced
+            The following page contains policies introduced
             by labels as defined in this list: {labels_list}
 
-            Please extract each policy preceded by these labels. 
+            Please extract each policy preceded by these labels.
+
+            If there are multiple policies associated with the same label, group all of them under that label.
+             
             Return the label along with the corresponding policy text.
             If no matching policies are found, output ONLY: NONE
 
