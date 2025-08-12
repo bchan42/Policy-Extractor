@@ -317,33 +317,31 @@ with ExtractLabelTab:
     st.markdown("   ✅  **Policy 6.2:**,  **Policy 6.3:** are valid labels for policies in this document. ")
     st.markdown("   ✅  **Programs:** is also a valid label IF you want to extract programs and policies. ")
 
-    st.markdown("   ")
-    st.markdown("   💡  This is a good description for how policies are formatted in this document: ")
-    st.markdown("""       Policies are labelled by the word 'Policy' followed by: 
-                            - A space
-                            - One or more digits
-                            - A period
-                            - One or more digits
-                """)
+    # st.markdown("   ")
+    # st.markdown("   💡  This is a good description for how policies are formatted in this document: ")
+    # st.markdown("""       Policies are labelled by the word 'Policy' followed by: 
+    #                         - A space
+    #                         - One or more digits
+    #                         - A period
+    #                         - One or more digits
+    #             """)
     st.markdown("---")
 
     st.markdown("""                
                 
         Take a moment to identify policy labels in your own document.
                 
-        You will be asked to:
-                1. Write a description for how policies are formatted in your document.
-                2. Provide at least 3 examples of labels for optimal results.
+        If you have multiple formats of labels, please list them all.
                 
     """)
 
-    st.warning("Enter a description explaining how your policies are formatted: ", icon = "✏️")
+    # st.warning("Enter a description explaining how your policies are formatted: ", icon = "✏️")
 
-    policy_description = st.text_input("", value="Write your description here...")
+    # policy_description = st.text_input("", value="Write your description here...")
 
-    st.warning("Enter policy labels (comma separated, e.g. 'Policy 6.3:, Policy 6.1:, Goal 3.2:') below: ", icon="✏️")
+    st.warning("Enter policy labels (comma separated if including multiple, e.g. 'Policy 6.3:, Goal 6.1:') below: ", icon="✏️")
 
-    policy_labels_input = st.text_input("", value="Enter policy labels here...")
+    policy_labels_input = st.text_input("Policy labels")
 
     # Process input into a list of labels
     policy_labels = [label.strip() for label in policy_labels_input.split(",") if label.strip()]
@@ -355,7 +353,7 @@ with ExtractLabelTab:
 
     # CODE FOR EXTRACTING POLICIES
     if doc:
-        label_df = process_document_with_labels(doc, policy_labels, policy_description)
+        label_df = process_document_with_labels(doc, policy_labels)
         st.session_state["label_df"] = label_df
 
         st.success("Extraction complete! Compare text page-by-page with extracted policies:")

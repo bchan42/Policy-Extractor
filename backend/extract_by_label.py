@@ -133,20 +133,45 @@ def extract_text(doc: str) -> List[str]:
         st.stop()
 
 ##################################################################
-# 3. Query Gemini by defining a policy based on user input (policy labels)
+# 3. Find policy labels by doing a regex search
 
-def query_gemini_policy_labels(page_text, policy_labels, description):
+# Generate a regex string
+def generate_broad_regex(s):
+    parts = re.findall(r'\w+|\d+|[^\w\s]+|\s+', s)
+    regex_parts = []
+    for part in parts:
+        if part.isspace():
+            regex_parts.append(r'\s+')
+        elif re.fullmatch(r'\d+(\.\d+)*', part):
+            regex_parts.append(r'[\d\.]+')
+        elif re.fullmatch(r'\w+', part):
+            regex_parts.append(r'\w+')
+        else:
+            regex_parts.append(re.escape(part))
+    return ''.join(regex_parts)
+
+def find_policy_labels(text, label_patterns):
+    combined_regex = '|'.join(generate_broad_regex(label) for label in label_patterns)
+    pattern = re.compile(combined_regex, re.IGNORECASE)
+    matches = pattern.findall(text)
+    found_labels = sorted(set(match.strip() for match in matches))
+    return found_labels
+
+##################################################################
+# 4. Query Gemini by defining a policy based on user input (policy labels)
+
+def query_gemini_policy_labels(page_text, policy_labels):
+
+    labels_list = '\n'.join(f"- {label}" for label in policy_labels)
 
     model = genai.GenerativeModel(model_name="gemini-2.5-flash-lite")
 
     prompt = f"""You are a city planning policy expert.
-            TASK:
-            From the following page, extract ONLY policy text that starts with a label in this format, as defined here: {description}
-            Example formats: {policy_labels}
+            The following page contains multiple policies. The policies are introduced
+            by labels as defined in this list: {labels_list}
 
-            INSTRUCTIONS:
-            Do not include explanations, summaries, or anything without a valid label. 
-            Preserve exact wording, punctuation, and line breaks.
+            Please extract each policy preceded by these labels. 
+            Return the label along with the corresponding policy text.
             If no matching policies are found, output ONLY: NONE
 
             Page: {page_text}
@@ -160,9 +185,9 @@ def query_gemini_policy_labels(page_text, policy_labels, description):
         return f"Error: {str(e)}"
     
 ##################################################################
-# 4. Run the prompt on the document
+# 5. Run the prompt on the document
 
-def process_document_with_labels(doc, policy_labels, description):
+def process_document_with_labels(doc, policy_labels):
 
     # Try extracting page-by-page
     text_chunks = extract_text_with_page_numbers(doc)
@@ -190,7 +215,11 @@ def process_document_with_labels(doc, policy_labels, description):
     for i, (page_number,para_text) in enumerate(page_chunks):
         # Trying to read in pages instead of paragraphs. Change to paragraphs if needed
         progress_text.write(f"Processing page {i + 1}/{total_chunks}...")
-        policy = query_gemini_policy_labels(para_text, policy_labels, description) 
+        found_labels = find_policy_labels(para_text, policy_labels)
+        if not found_labels:
+            print("No policy labels found on this page.")
+            continue
+        policy = query_gemini_policy_labels(para_text, found_labels) 
         results.append({
             "Page #": page_number,
             "Page Text": para_text.strip(),
